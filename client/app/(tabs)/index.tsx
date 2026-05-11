@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, View } from "tamagui";
+import { Text, YStack } from "tamagui";
 
 export default function Home() {
     return (
-        <View>
+        <YStack flex={1} backgroundColor="$accent12">
             <Text>Home</Text>
-        </View>
+        </YStack>
     );
 }
