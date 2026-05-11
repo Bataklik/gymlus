@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "tamagui";
 
-export default function Home() {
+export default function History() {
     return (
         <View>
-            <Text>Home</Text>
+            <Text>History</Text>
         </View>
     );
 }
