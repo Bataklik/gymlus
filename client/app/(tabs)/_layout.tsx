@@ -21,7 +21,9 @@ export default function Layout() {
                         <Ionicons
                             size={24}
                             name={focused ? "home" : "home-outline"}
-                            color={theme.background.val}
+                            color={
+                                focused ? theme.accent3.val : theme.color8.val
+                            }
                         />
                     ),
                 }}
@@ -33,8 +35,10 @@ export default function Layout() {
                     tabBarIcon: ({ focused }) => (
                         <Ionicons
                             size={24}
-                            name={focused ? "scan" : "scan-outline"}
-                            color={theme.accent3.val}
+                            name={focused ? "scan-circle" : "scan"}
+                            color={
+                                focused ? theme.accent3.val : theme.color8.val
+                            }
                         />
                     ),
                 }}
@@ -47,7 +51,9 @@ export default function Layout() {
                         <Ionicons
                             size={24}
                             name={focused ? "time" : "time-outline"}
-                            color={theme.accent3.val}
+                            color={
+                                focused ? theme.accent3.val : theme.color8.val
+                            }
                         />
                     ),
                 }}
