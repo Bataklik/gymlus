@@ -1,53 +1,98 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+import { createV5Theme, defaultChildrenThemes } from '@tamagui/config/v5'
+import { v5ComponentThemes } from '@tamagui/themes/v5'
+import { yellow, yellowDark, red, redDark, green, greenDark } from '@tamagui/colors'
 
-import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const darkPalette = [
+  'hsla(220, 13%, 4%, 1)',
+  'hsla(220, 13%, 9%, 1)',
+  'hsla(220, 14%, 13%, 1)',
+  'hsla(220, 12%, 17%, 1)',
+  'hsla(220, 11%, 22%, 1)',
+  'hsla(220, 10%, 28%, 1)',
+  'hsla(220, 9%,  36%, 1)',
+  'hsla(220, 8%,  46%, 1)',
+  'hsla(220, 8%,  56%, 1)',
+  'hsla(220, 8%,  66%, 1)',
+  'hsla(220, 12%, 88%, 1)',
+  'hsla(220, 13%, 96%, 1)',
+]
+const lightPalette = [
+  'hsla(220, 20%, 99%, 1)',
+  'hsla(220, 18%, 96%, 1)',
+  'hsla(220, 16%, 92%, 1)',
+  'hsla(220, 14%, 86%, 1)',
+  'hsla(220, 12%, 78%, 1)',
+  'hsla(220, 11%, 68%, 1)',
+  'hsla(220, 10%, 56%, 1)',
+  'hsla(220, 9%,  44%, 1)',
+  'hsla(220, 10%, 32%, 1)',
+  'hsla(220, 12%, 22%, 1)',
+  'hsla(220, 14%, 12%, 1)',
+  'hsla(220, 15%, 4%, 1)',
+]
 
-export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
-};
+const accentLight = {
+  "accent1":  "hsla(72, 80%, 40%, 1)",
+  "accent2":  "hsla(72, 82%, 44%, 1)",
+  "accent3":  "hsla(72, 84%, 48%, 1)",
+  "accent4":  "hsla(72, 86%, 52%, 1)",
+  "accent5":  "hsla(72, 88%, 56%, 1)",
+  "accent6":  "hsla(72, 90%, 60%, 1)",
+  "accent7":  "hsla(72, 92%, 64%, 1)",
+  "accent8":  "hsla(72, 94%, 68%, 1)",
+  "accent9":  "hsla(72, 96%, 72%, 1)",
+  "accent10": "hsla(72, 98%, 76%, 1)",
+  "accent11": "hsla(72, 30%, 14%, 1)",
+  "accent12": "hsla(220, 15%, 4%, 1)"
+}
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
+const accentDark = {
+  "accent1":  "hsla(72, 60%, 32%, 1)",
+  "accent2":  "hsla(72, 65%, 38%, 1)",
+  "accent3":  "hsla(72, 70%, 44%, 1)",
+  "accent4":  "hsla(72, 75%, 50%, 1)",
+  "accent5":  "hsla(72, 80%, 56%, 1)",
+  "accent6":  "hsla(72, 85%, 60%, 1)",
+  "accent7":  "hsla(72, 90%, 63%, 1)",
+  "accent8":  "hsla(72, 95%, 65%, 1)",
+  "accent9":  "hsla(72, 100%, 65%, 1)",
+  "accent10": "hsla(72, 100%, 72%, 1)",
+  "accent11": "hsla(72, 30%, 12%, 1)",
+  "accent12": "hsla(220, 15%, 4%, 1)"
+}
+
+const builtThemes = createV5Theme({
+  darkPalette,
+  lightPalette,
+  componentThemes: v5ComponentThemes,
+  accent: {
+    light: accentLight,
+    dark: accentDark,
   },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
+  childrenThemes: {
+    ...defaultChildrenThemes,
+
+    warning: {
+      light: yellow,
+      dark: yellowDark,
+    },
+    error: {
+      light: red,
+      dark: redDark,
+    },
+    success: {
+      light: green,
+      dark: greenDark,
+    },
   },
-  web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
-    mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-  },
-});
+})
+
+export type Themes = typeof builtThemes
+
+
+export const themes: Themes =
+  process.env.TAMAGUI_ENVIRONMENT === 'client' &&
+  process.env.NODE_ENV === 'production'
+    ? ({} as any)
+    : (builtThemes as any)
