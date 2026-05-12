@@ -17,7 +17,9 @@ export default function Home() {
             {/* Card scan */}
             <CardScan />
             {/* Card stats*/}
-            <XStack></XStack>
+            <XStack>
+                <YStack />
+            </XStack>
         </YStack>
     );
 }
