@@ -8,6 +8,12 @@ export default function Layout() {
         <Tabs
             screenOptions={{
                 headerShown: false,
+                headerStyle: {
+                    backgroundColor: theme.accent11.val,
+                },
+                headerTitleStyle: {
+                    color: theme.color12.val,
+                },
                 tabBarStyle: {
                     backgroundColor: theme.accent11.val,
                 },
