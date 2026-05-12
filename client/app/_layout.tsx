@@ -11,12 +11,14 @@ export const unstable_settings = {
 export default function RootLayout() {
     return (
         <TamaguiProvider config={config} defaultTheme={"dark"}>
-            <Stack>
+            <Stack
+                screenOptions={{
+                    contentStyle: {
+                        width: "100%",
+                    },
+                }}
+            >
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen
-                    name="modal"
-                    options={{ presentation: "modal", title: "Modal" }}
-                />
             </Stack>
             <StatusBar style="auto" />
         </TamaguiProvider>
