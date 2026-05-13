@@ -10,6 +10,16 @@ The app lets users scan gym machines or exercise cards using their camera. AI th
 - common mistakes
 - exercise videos
 
+## Home Screen Progress
+
+|  |  |  |
+|---|---|---|
+| ![Screenshot at May 12 15-36-41](./app-progress/home/Screenshot%20at%20May%2012%2015-36-41.png) | ![Screenshot at May 12 16-23-52](./app-progress/home/Screenshot%20at%20May%2012%2016-23-52.png) | ![Screenshot at May 12 17-46-53](./app-progress/home/Screenshot%20at%20May%2012%2017-46-53.png) |
+
+|  |  |
+|---|---|
+| ![Screenshot at May 13 10-43-53](./app-progress/home/Screenshot%20at%20May%2013%2010-43-53.png) | ![Screenshot at May 13 11-11-29](./app-progress/home/Screenshot%20at%20May%2013%2011-11-29.png) |
+
 ## Tech Stack
 
 ### Frontend
