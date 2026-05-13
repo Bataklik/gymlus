@@ -44,11 +44,13 @@ export default function CardScan() {
                     borderBottomLeftRadius={30}
                     borderBottomRightRadius={30}
                     backgroundColor="$accent7"
-                    width={180}
+                    width={160}
                 >
-                    <XStack gap={8}>
+                    <XStack gap={8} justify={"center"}>
                         <Ionicons color="$color1" name="scan" size={18} />
-                        <Text color="$color1">Quick scan</Text>
+                        <Text color="$color1" fontWeight={700}>
+                            Quick scan
+                        </Text>
                     </XStack>
                 </Button>
             </YStack>
