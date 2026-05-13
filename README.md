@@ -16,9 +16,9 @@ The app lets users scan gym machines or exercise cards using their camera. AI th
 | :----: | :----: | :----: |
 | ![Screenshot_at_May_12_15-36-41](./client/app-progress/home/Screenshot_at_May_12_15-36-41.png) | ![Screenshot_at_May_12_16-23-52](./client/app-progress/home/Screenshot_at_May_12_16-23-52.png) | ![Screenshot_at_May_12_17-46-53](./client/app-progress/home/Screenshot_at_May_12_17-46-53.png) |
 
-| May 13 - 10:43 | May 13 - 11:11 |
-| :----: | :----: |
-| ![Screenshot_at_May_13_10-43-53](./client/app-progress/home/Screenshot_at_May_13_10-43-53.png) | ![Screenshot_at_May_13_11-11-29](./client/app-progress/home/Screenshot_at_May_13_11-11-29.png) |
+| May 13 - 10:43 | May 13 - 11:11 | May 13 - 16:32 |
+| :----: | :----: | :----: |
+| ![Screenshot_at_May_13_10-43-53](./client/app-progress/home/Screenshot_at_May_13_10-43-53.png) | ![Screenshot_at_May_13_11-11-29](./client/app-progress/home/Screenshot_at_May_13_11-11-29.png) | ![Screenshot_at_May_13_16-32-12](./client/app-progress/home/Screenshot_at_May_13_16-32-12.png) |
 
 ## Tech Stack
 
