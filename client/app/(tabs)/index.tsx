@@ -1,8 +1,8 @@
 import CardScan from "@/components/home/card-scan";
+import CardStats from "@/components/home/card-stats";
 import Header from "@/components/layout/header";
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { YStack, Text, XStack, Button } from "tamagui";
+import { YStack } from "tamagui";
 
 export default function Home() {
     return (
@@ -14,12 +14,12 @@ export default function Home() {
         >
             {/* Header */}
             <Header />
-            {/* Card scan */}
-            <CardScan />
-            {/* Card stats*/}
-            <XStack>
-                <YStack />
-            </XStack>
+            <YStack gap={10} paddingHorizontal={8}>
+                {/* Card scan */}
+                <CardScan />
+                {/* Card stats*/}
+                <CardStats />
+            </YStack>
         </YStack>
     );
 }
