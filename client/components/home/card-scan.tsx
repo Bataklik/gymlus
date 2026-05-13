@@ -8,10 +8,10 @@ export default function CardScan() {
             elevation={10}
             backgroundColor="$accent11"
             blockSize={300}
-            borderTopLeftRadius={40}
-            borderTopRightRadius={40}
-            borderBottomLeftRadius={40}
-            borderBottomRightRadius={40}
+            borderTopLeftRadius={20}
+            borderTopRightRadius={20}
+            borderBottomLeftRadius={20}
+            borderBottomRightRadius={20}
             padding={35}
         >
             <XStack
