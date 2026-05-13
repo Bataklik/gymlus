@@ -1,10 +1,13 @@
 import CardScan from "@/components/home/card-scan";
 import CardStats from "@/components/home/card-stats";
 import Header from "@/components/layout/header";
-import React from "react";
+import React, { useState } from "react";
 import { YStack } from "tamagui";
 
 export default function Home() {
+    const [dayStreak, setDayStreak] = useState(4);
+    const [scans, setScans] = useState(21);
+    const [saved, setSaved] = useState(67);
     return (
         <YStack
             flex={1}
@@ -18,7 +21,7 @@ export default function Home() {
                 {/* Card scan */}
                 <CardScan />
                 {/* Card stats*/}
-                <CardStats />
+                <CardStats dayStreak={dayStreak} scans={scans} saved={saved} />
             </YStack>
         </YStack>
     );
