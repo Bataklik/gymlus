@@ -77,7 +77,6 @@ const stylesheet = StyleSheet.create({
         paddingHorizontal: 20,
     },
     headerContainer: {
-        backgroundColor: "$accent12",
         alignItems: "center",
         paddingVertical: 10,
     },

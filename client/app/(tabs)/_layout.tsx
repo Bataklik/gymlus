@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "tamagui";
+import { TabBar } from "@/components/layout/TabBar";
 
 export default function Layout() {
     const theme = useTheme();
@@ -8,16 +9,8 @@ export default function Layout() {
         <Tabs
             screenOptions={{
                 headerShown: false,
-                headerStyle: {
-                    backgroundColor: theme.accent11.val,
-                },
-                headerTitleStyle: {
-                    color: theme.color12.val,
-                },
-                tabBarStyle: {
-                    backgroundColor: theme.accent11.val,
-                },
             }}
+            tabBar={(props) => <TabBar {...props} />}
         >
             <Tabs.Screen
                 name="index"
@@ -34,21 +27,7 @@ export default function Layout() {
                     ),
                 }}
             />
-            <Tabs.Screen
-                name="scan"
-                options={{
-                    title: "Scan",
-                    tabBarIcon: ({ focused }) => (
-                        <Ionicons
-                            size={24}
-                            name={focused ? "scan-circle" : "scan"}
-                            color={
-                                focused ? theme.accent3.val : theme.color8.val
-                            }
-                        />
-                    ),
-                }}
-            />
+
             <Tabs.Screen
                 name="history"
                 options={{
