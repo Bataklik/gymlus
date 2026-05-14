@@ -8,6 +8,8 @@
     "scheme": "client",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+
+
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
