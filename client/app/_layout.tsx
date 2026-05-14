@@ -13,9 +13,7 @@ export default function RootLayout() {
         <TamaguiProvider config={config} defaultTheme={"dark"}>
             <Stack
                 screenOptions={{
-                    contentStyle: {
-                        width: "100%",
-                    },
+                    headerShown: false,
                 }}
             >
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
