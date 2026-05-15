@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "tamagui";
-import { TabBar } from "@/components/layout/TabBar";
+import { TabBar } from "@/components/layout/tabbar";
 
 export default function Layout() {
     const theme = useTheme();

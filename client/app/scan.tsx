@@ -1,20 +1,67 @@
-import React, { useEffect } from "react";
-import { XStack, YStack, Text, Button } from "tamagui";
-import { Camera, useCameraPermission } from "react-native-vision-camera";
-import { Pressable, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useRef, useState } from "react";
+import { YStack, Text, Button } from "tamagui";
+import {
+    CameraView,
+    CameraType,
+    useCameraPermissions,
+    Camera,
+    FlashMode,
+} from "expo-camera";
 import ScanHeader from "@/components/layout/scan-header";
-import { Tabs, router } from "expo-router";
-
+import { router } from "expo-router";
+import * as MediaLibrary from "expo-media-library";
+import ScanBotbar from "@/components/scan/scan-botbar";
 export default function Scan() {
-    const { hasPermission, requestPermission } = useCameraPermission();
+    const [permission, requestCameraPermission] = useCameraPermissions();
+    const [permissionResponse, requestMediaPermission] =
+        MediaLibrary.usePermissions();
+    const [facing, setFacing] = useState<CameraType>("back");
+    const [isFlashOn, setIsFlashOn] = useState<FlashMode>("off");
+    const camera = useRef(null);
     const closeHandler = () => {
         router.back();
     };
-
+    const flashHandler = () => {
+        setIsFlashOn(isFlashOn === "off" ? "on" : "off");
+    };
+    const requestMediaLibraryPermission = async () => {
+        const { status } = await MediaLibrary.requestPermissionsAsync();
+        if (status === "granted") {
+            console.log("Media library permission granted");
+        } else {
+            console.log("Media library permission denied");
+        }
+    };
     useEffect(() => {
-        if (!hasPermission) requestPermission();
-    }, [hasPermission, requestPermission]);
+        requestMediaLibraryPermission();
+    }, []);
+
+    if (!permission) {
+        // Camera permissions are still loading.
+        return <Text>No permission</Text>;
+    }
+    if (!permission.granted) {
+        // Camera permissions are not granted yet.
+        return (
+            <YStack
+                flex={1}
+                backgroundColor="$accent12"
+                paddingBlockStart={40}
+                elevation={10}
+                gap={20}
+            >
+                <ScanHeader
+                    closeHandler={closeHandler}
+                    flashHandler={flashHandler}
+                />
+                <Text>We need your permission to show the camera</Text>
+                <Button onPress={requestCameraPermission}>
+                    <Text>Grant Permission</Text>
+                </Button>
+            </YStack>
+        );
+    }
+
     return (
         <YStack
             flex={1}
@@ -25,11 +72,17 @@ export default function Scan() {
         >
             <ScanHeader
                 closeHandler={closeHandler}
-                flashHandler={() => console.log("Flash clicked")}
+                flashHandler={flashHandler}
             />
-            <YStack>
-                <Camera style={{ flex: 1 }} isActive={false} device={"back"} />
+            <YStack flex={1}>
+                <CameraView
+                    ref={camera}
+                    style={{ flex: 1, backgroundColor: "white" }}
+                    facing={facing}
+                    flash={isFlashOn}
+                />
             </YStack>
+            <ScanBotbar />
         </YStack>
     );
 }
