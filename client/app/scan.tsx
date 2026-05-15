@@ -5,22 +5,24 @@ import {
     CameraType,
     useCameraPermissions,
     Camera,
+    FlashMode,
 } from "expo-camera";
 import ScanHeader from "@/components/layout/scan-header";
 import { router } from "expo-router";
 import * as MediaLibrary from "expo-media-library";
+import ScanBotbar from "@/components/scan/scan-botbar";
 export default function Scan() {
     const [permission, requestCameraPermission] = useCameraPermissions();
     const [permissionResponse, requestMediaPermission] =
         MediaLibrary.usePermissions();
     const [facing, setFacing] = useState<CameraType>("back");
-    const [isFlashOn, setIsFlashOn] = useState(false);
+    const [isFlashOn, setIsFlashOn] = useState<FlashMode>("off");
     const camera = useRef(null);
     const closeHandler = () => {
         router.back();
     };
     const flashHandler = () => {
-        setIsFlashOn(!isFlashOn);
+        setIsFlashOn(isFlashOn === "off" ? "on" : "off");
     };
     const requestMediaLibraryPermission = async () => {
         const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -80,6 +82,7 @@ export default function Scan() {
                     flash={isFlashOn}
                 />
             </YStack>
+            <ScanBotbar />
         </YStack>
     );
 }
