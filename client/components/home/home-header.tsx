@@ -3,7 +3,7 @@ import React from "react";
 import { XStack, Text, YStack } from "tamagui";
 import { Pressable, StyleSheet } from "react-native";
 
-export default function Header() {
+export default function HomeHeader() {
     // Source - https://stackoverflow.com/a/24998705
     // Posted by Joeytje50
     // Retrieved 2026-05-12, License - CC BY-SA 3.0
