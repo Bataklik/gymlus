@@ -1,13 +1,18 @@
 import React from "react";
-import { XStack, Text, Button } from "tamagui";
-import { StyleSheet } from "react-native";
+import { XStack, Text } from "tamagui";
+import {
+    Pressable,
+    PressableStateCallbackType,
+    StyleProp,
+    StyleSheet,
+    ViewStyle,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 interface ScanHeaderProps {
     closeHandler?: () => void;
     flashHandler?: () => void;
 }
-
 export default function ScanHeader({
     closeHandler,
     flashHandler,
@@ -20,16 +25,13 @@ export default function ScanHeader({
             paddingBlockStart={40}
             justify={"space-between"}
         >
-            <Button
-                borderTopLeftRadius={100}
-                borderTopRightRadius={100}
-                borderBottomLeftRadius={100}
-                borderBottomRightRadius={100}
-                style={stylesheet.buttonContainer}
-                onPress={closeHandler}
-            >
-                <Ionicons name="close" color={"white"} size={28} />
-            </Button>
+            <ScanButton
+                onPressHandler={closeHandler}
+                iconName="close"
+                style={{
+                    marginLeft: 10,
+                }}
+            />
             <XStack alignItems={"center"}>
                 <Ionicons
                     name="scan"
@@ -39,17 +41,39 @@ export default function ScanHeader({
                 />
                 <Text style={stylesheet.headerTitle}>Scan</Text>
             </XStack>
-            <Button
+            <ScanButton
+                onPressHandler={flashHandler}
+                iconName="flash-outline"
+                style={{
+                    marginRight: 10,
+                }}
+            />
+        </XStack>
+    );
+}
+
+interface ScanButtonProps {
+    onPressHandler?: () => void;
+    iconName: React.ComponentProps<typeof Ionicons>["name"];
+    style?:
+        | StyleProp<ViewStyle>
+        | ((state: PressableStateCallbackType) => StyleProp<ViewStyle>);
+}
+function ScanButton({ onPressHandler, iconName, style }: ScanButtonProps) {
+    return (
+        <Pressable style={style} onPress={onPressHandler}>
+            <XStack
                 borderTopLeftRadius={100}
                 borderTopRightRadius={100}
                 borderBottomLeftRadius={100}
                 borderBottomRightRadius={100}
-                style={stylesheet.buttonContainer}
-                onPress={flashHandler}
+                borderColor="$color5"
+                p={5}
+                bg={"$color4"}
             >
-                <Ionicons name="flash-outline" color={"white"} size={26} />
-            </Button>
-        </XStack>
+                <Ionicons name={iconName} color={"white"} size={26} />
+            </XStack>
+        </Pressable>
     );
 }
 
@@ -68,8 +92,5 @@ const stylesheet = StyleSheet.create({
     headerContainer: {
         alignItems: "center",
         paddingVertical: 10,
-    },
-    buttonContainer: {
-        marginRight: 10,
     },
 });
