@@ -1,9 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { XStack, Text, YStack, Button } from "tamagui";
-import { StyleSheet } from "react-native";
+import { XStack, Text, YStack } from "tamagui";
+import { Pressable, StyleSheet } from "react-native";
 
-export default function Header() {
+export default function HomeHeader() {
     // Source - https://stackoverflow.com/a/24998705
     // Posted by Joeytje50
     // Retrieved 2026-05-12, License - CC BY-SA 3.0
@@ -51,16 +51,32 @@ export default function Header() {
                 </Text>
                 <Text style={stylesheet.headerTitle}>Gymlus</Text>
             </YStack>
-            <Button
+            <SettingsButton onPress={() => console.log("Settings pressed")} />
+        </XStack>
+    );
+}
+
+interface SettingsButtonProps {
+    onPress?: () => void;
+}
+function SettingsButton({ onPress }: SettingsButtonProps) {
+    return (
+        <Pressable onPress={onPress}>
+            <XStack
                 borderTopLeftRadius={100}
                 borderTopRightRadius={100}
                 borderBottomLeftRadius={100}
                 borderBottomRightRadius={100}
+                borderWidth={1}
+                borderColor="$color5"
+                paddingBlock={5}
+                paddingInline={5}
+                bg={"$color4"}
                 style={stylesheet.buttonContainer}
             >
                 <Ionicons name="cog-outline" color={"white"} size={28} />
-            </Button>
-        </XStack>
+            </XStack>
+        </Pressable>
     );
 }
 
@@ -81,6 +97,6 @@ const stylesheet = StyleSheet.create({
         paddingVertical: 10,
     },
     buttonContainer: {
-        marginRight: 10,
+        marginRight: 20,
     },
 });

@@ -1,9 +1,9 @@
 import CardScan from "@/components/home/card-scan";
 import CardStats from "@/components/home/card-stats";
 import RecentlyScanned from "@/components/home/recently-scanned";
-import Header from "@/components/layout/header";
+import HomeHeader from "@/components/home/home-header";
 import React, { useState } from "react";
-import { XStack, YStack, Text, Image } from "tamagui";
+import { YStack } from "tamagui";
 
 export default function Home() {
     const [dayStreak, setDayStreak] = useState(4);
@@ -17,7 +17,7 @@ export default function Home() {
             paddingBlockStart={20}
         >
             {/* Header */}
-            <Header />
+            <HomeHeader />
             <YStack gap={15} paddingHorizontal={8}>
                 {/* Card scan */}
                 <CardScan />

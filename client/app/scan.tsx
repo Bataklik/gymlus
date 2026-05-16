@@ -4,25 +4,29 @@ import {
     CameraView,
     CameraType,
     useCameraPermissions,
-    Camera,
     FlashMode,
 } from "expo-camera";
-import ScanHeader from "@/components/layout/scan-header";
+import ScanHeader from "@/components/scan/scan-header";
 import { router } from "expo-router";
 import * as MediaLibrary from "expo-media-library";
 import ScanBotbar from "@/components/scan/scan-botbar";
 export default function Scan() {
-    const [permission, requestCameraPermission] = useCameraPermissions();
-    const [permissionResponse, requestMediaPermission] =
+    const [cameraPermission, requestCameraPermission] = useCameraPermissions();
+    const [mediaPermission, requestMediaPermission] =
         MediaLibrary.usePermissions();
     const [facing, setFacing] = useState<CameraType>("back");
-    const [isFlashOn, setIsFlashOn] = useState<FlashMode>("off");
+    const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const camera = useRef(null);
+
     const closeHandler = () => {
         router.back();
     };
     const flashHandler = () => {
-        setIsFlashOn(isFlashOn === "off" ? "on" : "off");
+        console.log("Flash toggled: " + isFlashOn);
+        setIsFlashOn(!isFlashOn);
+    };
+    const facingHandler = () => {
+        setFacing(facing === "back" ? "front" : "back");
     };
     const requestMediaLibraryPermission = async () => {
         const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -36,11 +40,11 @@ export default function Scan() {
         requestMediaLibraryPermission();
     }, []);
 
-    if (!permission) {
+    if (!cameraPermission) {
         // Camera permissions are still loading.
         return <Text>No permission</Text>;
     }
-    if (!permission.granted) {
+    if (!cameraPermission.granted) {
         // Camera permissions are not granted yet.
         return (
             <YStack
@@ -50,10 +54,7 @@ export default function Scan() {
                 elevation={10}
                 gap={20}
             >
-                <ScanHeader
-                    closeHandler={closeHandler}
-                    flashHandler={flashHandler}
-                />
+                <ScanHeader closeHandler={closeHandler} />
                 <Text>We need your permission to show the camera</Text>
                 <Button onPress={requestCameraPermission}>
                     <Text>Grant Permission</Text>
@@ -79,10 +80,13 @@ export default function Scan() {
                     ref={camera}
                     style={{ flex: 1, backgroundColor: "white" }}
                     facing={facing}
-                    flash={isFlashOn}
+                    enableTorch={isFlashOn}
                 />
             </YStack>
-            <ScanBotbar />
+            <ScanBotbar
+                facingHandler={facingHandler}
+                flashHandler={flashHandler}
+            />
         </YStack>
     );
 }

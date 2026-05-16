@@ -1,12 +1,19 @@
 import React from "react";
-import { XStack, Text, Button, Circle } from "tamagui";
+import { XStack, Circle } from "tamagui";
 import { Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function ScanBotbar() {
-    const insets = useSafeAreaInsets();
+interface ScanBotbarProps {
+    facingHandler: () => void;
+    flashHandler: () => void;
+}
 
+export default function ScanBotbar({
+    facingHandler,
+    flashHandler,
+}: ScanBotbarProps) {
+    const insets = useSafeAreaInsets();
     return (
         <XStack
             position="absolute"
@@ -24,15 +31,9 @@ export default function ScanBotbar() {
             blockSize={100}
             justify={"space-between"}
         >
-            <ScanBotButton
-                icon="close"
-                onPress={() => console.log("Gallery clicked")}
-            />
+            <ScanBotButton icon="flash-outline" onPress={flashHandler} />
             <ScanButton />
-            <ScanBotButton
-                icon="images"
-                onPress={() => console.log("Gallery clicked")}
-            />
+            <ScanBotButton icon="camera-reverse" onPress={facingHandler} />
         </XStack>
     );
 }
