@@ -3,7 +3,7 @@ import CardStats from "@/components/home/card-stats";
 import RecentlyScanned from "@/components/home/recently-scanned";
 import Header from "@/components/home/home-header";
 import React, { useState } from "react";
-import { XStack, YStack, Text, Image } from "tamagui";
+import { YStack } from "tamagui";
 
 export default function Home() {
     const [dayStreak, setDayStreak] = useState(4);
