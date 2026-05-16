@@ -15,14 +15,15 @@ export default function Scan() {
     const [mediaPermission, requestMediaPermission] =
         MediaLibrary.usePermissions();
     const [facing, setFacing] = useState<CameraType>("back");
-    const [isFlashOn, setIsFlashOn] = useState<FlashMode>("off");
+    const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const camera = useRef(null);
 
     const closeHandler = () => {
         router.back();
     };
     const flashHandler = () => {
-        setIsFlashOn(isFlashOn === "off" ? "on" : "off");
+        console.log("Flash toggled: " + isFlashOn);
+        setIsFlashOn(!isFlashOn);
     };
     const facingHandler = () => {
         setFacing(facing === "back" ? "front" : "back");
@@ -79,7 +80,7 @@ export default function Scan() {
                     ref={camera}
                     style={{ flex: 1, backgroundColor: "white" }}
                     facing={facing}
-                    flash={isFlashOn}
+                    enableTorch={isFlashOn}
                 />
             </YStack>
             <ScanBotbar
