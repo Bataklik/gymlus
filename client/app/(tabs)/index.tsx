@@ -1,7 +1,7 @@
 import CardScan from "@/components/home/card-scan";
 import CardStats from "@/components/home/card-stats";
 import RecentlyScanned from "@/components/home/recently-scanned";
-import Header from "@/components/layout/header";
+import Header from "@/components/home/home-header";
 import React, { useState } from "react";
 import { XStack, YStack, Text, Image } from "tamagui";
 
