@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ComponentRef, useEffect, useRef, useState } from "react";
 import { YStack, Text, Button } from "tamagui";
 import {
     CameraView,
@@ -16,8 +16,20 @@ export default function Scan() {
         MediaLibrary.usePermissions();
     const [facing, setFacing] = useState<CameraType>("back");
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
-    const camera = useRef(null);
+        const camera = useRef<ComponentRef<typeof CameraView> | null>(null);
+    const [image, setImage] = useState<string | null>(null);
 
+    const takePicture = async () => {
+        if (camera.current) {
+            const options = {
+                quality: 0.5,
+                base64: true,
+            };
+            const photo = await camera.current?.takePictureAsync(options);
+            if (!photo) return;
+            setImage(photo.uri);
+            console.log("Photo taken:", photo.uri);
+        }
     const closeHandler = () => {
         router.back();
     };
@@ -71,10 +83,7 @@ export default function Scan() {
             elevation={10}
             gap={20}
         >
-            <ScanHeader
-                closeHandler={closeHandler}
-                flashHandler={flashHandler}
-            />
+            <ScanHeader closeHandler={closeHandler} />
             <YStack flex={1}>
                 <CameraView
                     ref={camera}
