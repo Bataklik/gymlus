@@ -1,44 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { YStack, Text, Button } from "tamagui";
-import {
-    CameraView,
-    CameraType,
-    useCameraPermissions,
-    FlashMode,
-} from "expo-camera";
+import { CameraView } from "expo-camera";
 import ScanHeader from "@/components/scan/scan-header";
-import { router } from "expo-router";
-import * as MediaLibrary from "expo-media-library";
+import { useScanCamera } from "@/hooks/useScanCamera";
 import ScanBotbar from "@/components/scan/scan-botbar";
-export default function Scan() {
-    const [cameraPermission, requestCameraPermission] = useCameraPermissions();
-    const [mediaPermission, requestMediaPermission] =
-        MediaLibrary.usePermissions();
-    const [facing, setFacing] = useState<CameraType>("back");
-    const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
-    const camera = useRef(null);
+import { router } from "expo-router";
 
-    const closeHandler = () => {
-        router.back();
-    };
-    const flashHandler = () => {
-        console.log("Flash toggled: " + isFlashOn);
-        setIsFlashOn(!isFlashOn);
-    };
-    const facingHandler = () => {
-        setFacing(facing === "back" ? "front" : "back");
-    };
-    const requestMediaLibraryPermission = async () => {
-        const { status } = await MediaLibrary.requestPermissionsAsync();
-        if (status === "granted") {
-            console.log("Media library permission granted");
-        } else {
-            console.log("Media library permission denied");
-        }
-    };
+export default function Scan() {
+    const {
+        cameraPermission,
+        requestCameraPermission,
+        isFlashOn,
+        camera,
+        image,
+        setImage,
+        takePicture,
+        closeHandler,
+        flashHandler,
+        pickImage,
+        requestMediaLibraryPermission,
+    } = useScanCamera();
     useEffect(() => {
         requestMediaLibraryPermission();
     }, []);
+
+    useEffect(() => {
+        if (!image) return;
+        router.push({ pathname: "/exercise", params: { image } });
+        setImage(null);
+    }, [image, setImage]);
 
     if (!cameraPermission) {
         // Camera permissions are still loading.
@@ -54,7 +44,11 @@ export default function Scan() {
                 elevation={10}
                 gap={20}
             >
-                <ScanHeader closeHandler={closeHandler} />
+                <ScanHeader
+                    title="Scan"
+                    icon="camera"
+                    closeHandler={closeHandler}
+                />
                 <Text>We need your permission to show the camera</Text>
                 <Button onPress={requestCameraPermission}>
                     <Text>Grant Permission</Text>
@@ -72,20 +66,22 @@ export default function Scan() {
             gap={20}
         >
             <ScanHeader
+                title="Scan"
+                icon="camera"
                 closeHandler={closeHandler}
-                flashHandler={flashHandler}
             />
             <YStack flex={1}>
                 <CameraView
                     ref={camera}
                     style={{ flex: 1, backgroundColor: "white" }}
-                    facing={facing}
+                    facing={"back"}
                     enableTorch={isFlashOn}
                 />
             </YStack>
             <ScanBotbar
-                facingHandler={facingHandler}
+                pickImageHandler={pickImage}
                 flashHandler={flashHandler}
+                cameraHandler={takePicture}
             />
         </YStack>
     );

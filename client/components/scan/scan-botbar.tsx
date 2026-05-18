@@ -5,13 +5,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface ScanBotbarProps {
-    facingHandler: () => void;
+    pickImageHandler: () => void;
     flashHandler: () => void;
+    cameraHandler?: () => void;
 }
 
 export default function ScanBotbar({
-    facingHandler,
+    pickImageHandler,
     flashHandler,
+    cameraHandler,
 }: ScanBotbarProps) {
     const insets = useSafeAreaInsets();
     return (
@@ -32,8 +34,8 @@ export default function ScanBotbar({
             justify={"space-between"}
         >
             <ScanBotButton icon="flash-outline" onPress={flashHandler} />
-            <ScanButton />
-            <ScanBotButton icon="camera-reverse" onPress={facingHandler} />
+            <ScanButton onPressHandler={cameraHandler} />
+            <ScanBotButton icon="images" onPress={pickImageHandler} />
         </XStack>
     );
 }
@@ -61,11 +63,14 @@ const ScanBotButton = ({
     );
 };
 
-function ScanButton() {
+interface ScanButtonProps {
+    onPressHandler?: () => void;
+}
+function ScanButton({ onPressHandler }: ScanButtonProps) {
     return (
         <Pressable
             style={{ flex: 1, alignItems: "center" }}
-            onPress={() => console.log("Scan clicked")}
+            onPress={onPressHandler}
         >
             <Circle
                 size={52}

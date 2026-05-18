@@ -28,7 +28,7 @@ The app lets users scan gym machines or exercise cards using their camera. AI th
 
 | May 15 - 12:16 | May 16 - 21:16 | ... |
 | :----: | :----: | :----: |
-| <img src="./client/app-progress/home/Screenshot_at_May_15_12-16-30.png" height="500"> | <img src="./client/app-progress/home/Screenshot_at_May_16_21-16-58.png" height="500"> | ... |
+| <img src="./client/app-progress/home/Screenshot_at_May_15_12-16-30.png" height="500"> | <img src="./client/app-progress/home/Screenshot_at_May_16_21-16-58.png" height="500"> | <img src="./client/app-progress/home/Screenshot_at_May_18_16-59-53.png" height="500"> |
 
 ## Tech Stack
 

@@ -10,10 +10,16 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 interface ScanHeaderProps {
+    icon: React.ComponentProps<typeof Ionicons>["name"];
+    title: string;
     closeHandler?: () => void;
 }
 
-export default function ScanHeader({ closeHandler }: ScanHeaderProps) {
+export default function ScanHeader({
+    closeHandler,
+    icon,
+    title,
+}: ScanHeaderProps) {
     return (
         <XStack
             style={stylesheet.headerContainer}
@@ -29,7 +35,7 @@ export default function ScanHeader({ closeHandler }: ScanHeaderProps) {
                     marginLeft: 10,
                 }}
             />
-            <ScanHeaderTitle title="Scan" icon="camera" />
+            <ScanHeaderTitle title={title} icon={icon} />
             <XStack p={5} />
         </XStack>
     );
