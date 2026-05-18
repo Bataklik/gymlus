@@ -1,53 +1,24 @@
-import React, { ComponentRef, useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { YStack, Text, Button } from "tamagui";
-import {
-    CameraView,
-    CameraType,
-    useCameraPermissions,
-    FlashMode,
-} from "expo-camera";
+import { CameraView } from "expo-camera";
 import ScanHeader from "@/components/scan/scan-header";
-import { router } from "expo-router";
-import * as MediaLibrary from "expo-media-library";
+import { useScanCamera } from "@/hooks/useScanCamera";
 import ScanBotbar from "@/components/scan/scan-botbar";
-export default function Scan() {
-    const [cameraPermission, requestCameraPermission] = useCameraPermissions();
-    const [mediaPermission, requestMediaPermission] =
-        MediaLibrary.usePermissions();
-    const [facing, setFacing] = useState<CameraType>("back");
-    const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
-        const camera = useRef<ComponentRef<typeof CameraView> | null>(null);
-    const [image, setImage] = useState<string | null>(null);
 
-    const takePicture = async () => {
-        if (camera.current) {
-            const options = {
-                quality: 0.5,
-                base64: true,
-            };
-            const photo = await camera.current?.takePictureAsync(options);
-            if (!photo) return;
-            setImage(photo.uri);
-            console.log("Photo taken:", photo.uri);
-        }
-    const closeHandler = () => {
-        router.back();
-    };
-    const flashHandler = () => {
-        console.log("Flash toggled: " + isFlashOn);
-        setIsFlashOn(!isFlashOn);
-    };
-    const facingHandler = () => {
-        setFacing(facing === "back" ? "front" : "back");
-    };
-    const requestMediaLibraryPermission = async () => {
-        const { status } = await MediaLibrary.requestPermissionsAsync();
-        if (status === "granted") {
-            console.log("Media library permission granted");
-        } else {
-            console.log("Media library permission denied");
-        }
-    };
+export default function Scan() {
+    const {
+        cameraPermission,
+        requestCameraPermission,
+        isFlashOn,
+        camera,
+        image,
+        setImage,
+        takePicture,
+        closeHandler,
+        flashHandler,
+        pickImage,
+        requestMediaLibraryPermission,
+    } = useScanCamera();
     useEffect(() => {
         requestMediaLibraryPermission();
     }, []);
@@ -88,13 +59,14 @@ export default function Scan() {
                 <CameraView
                     ref={camera}
                     style={{ flex: 1, backgroundColor: "white" }}
-                    facing={facing}
+                    facing={"back"}
                     enableTorch={isFlashOn}
                 />
             </YStack>
             <ScanBotbar
-                facingHandler={facingHandler}
+                pickImageHandler={pickImage}
                 flashHandler={flashHandler}
+                cameraHandler={takePicture}
             />
         </YStack>
     );
