@@ -4,6 +4,7 @@ import { CameraView } from "expo-camera";
 import ScanHeader from "@/components/scan/scan-header";
 import { useScanCamera } from "@/hooks/useScanCamera";
 import ScanBotbar from "@/components/scan/scan-botbar";
+import { router } from "expo-router";
 
 export default function Scan() {
     const {
@@ -23,6 +24,12 @@ export default function Scan() {
         requestMediaLibraryPermission();
     }, []);
 
+    useEffect(() => {
+        if (!image) return;
+        router.push({ pathname: "/exercise", params: { image } });
+        setImage(null);
+    }, [image, setImage]);
+
     if (!cameraPermission) {
         // Camera permissions are still loading.
         return <Text>No permission</Text>;
@@ -37,7 +44,11 @@ export default function Scan() {
                 elevation={10}
                 gap={20}
             >
-                <ScanHeader closeHandler={closeHandler} />
+                <ScanHeader
+                    title="Scan"
+                    icon="camera"
+                    closeHandler={closeHandler}
+                />
                 <Text>We need your permission to show the camera</Text>
                 <Button onPress={requestCameraPermission}>
                     <Text>Grant Permission</Text>
@@ -54,7 +65,11 @@ export default function Scan() {
             elevation={10}
             gap={20}
         >
-            <ScanHeader closeHandler={closeHandler} />
+            <ScanHeader
+                title="Scan"
+                icon="camera"
+                closeHandler={closeHandler}
+            />
             <YStack flex={1}>
                 <CameraView
                     ref={camera}
