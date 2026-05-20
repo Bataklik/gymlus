@@ -3,7 +3,7 @@ import ScanHeader from "@/components/scan/scan-header";
 import { router } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { ExerciseInfoSection } from "@/components/exercise/exercise-info-section";
-import { Ionicons } from "@expo/vector-icons";
+import { MuscleItem } from "@/components/exercise/muscle-item";
 
 interface ExerciseInfoProps {
     title: string;
@@ -42,6 +42,13 @@ export default function ExerciseDetail() {
         player.loop = true;
         player.play();
     });
+
+    const muscles = [
+        { name: "Latissimus Dorsi", main: true },
+        { name: "Rhomboids", main: false },
+        { name: "Trapezius", main: false },
+        { name: "Biceps Brachii", main: false },
+    ];
 
     return (
         <YStack
@@ -89,9 +96,13 @@ export default function ExerciseDetail() {
                                     flexWrap="wrap"
                                     justify={"flex-start"}
                                 >
-                                    <MuscleItem />
-                                    <MuscleItem />
-                                    <MuscleItem />
+                                    {muscles.map((muscle, index) => (
+                                        <MuscleItem
+                                            key={index}
+                                            name={muscle.name}
+                                            main={muscle.main}
+                                        />
+                                    ))}
                                 </XStack>
                             </YStack>
                         </YStack>
