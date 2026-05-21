@@ -1,9 +1,11 @@
-import { YStack, XStack, ScrollView, Text } from "tamagui";
+import { YStack, XStack, ScrollView, Text, Button } from "tamagui";
 import ScanHeader from "@/components/scan/scan-header";
 import { router } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { ExerciseInfoSection } from "@/components/exercise/exercise-info-section";
 import { MuscleItem } from "@/components/exercise/muscle-item";
+import { MuscleInfo } from "@/components/exercise/muscle-info";
+import { Ionicons } from "@expo/vector-icons";
 
 interface ExerciseInfoProps {
     title: string;
@@ -63,13 +65,13 @@ export default function ExerciseDetail() {
                 icon="barbell"
                 closeHandler={closeHandler}
             />
-            <YStack gap={10} className="h-full">
+            <YStack flex={1} gap={10}>
                 <VideoView
                     style={{ width: "100%", height: 400 }}
                     player={player}
                     fullscreenOptions={{ enable: true }}
                 />
-                <ScrollView maxH={259} width="100%" rounded="$4">
+                <ScrollView flex={1} width="100%" rounded="$4">
                     <YStack gap={10} p={5}>
                         <YStack gap={10} p={10}>
                             <ExerciseDescription
@@ -86,29 +88,26 @@ export default function ExerciseDetail() {
                                 reps={8}
                                 rest={90}
                             />
-                            <YStack>
-                                <Text fontSize={18} fontWeight={600}>
-                                    Muscles target
-                                </Text>
-                                <XStack
-                                    gap={10}
-                                    mt={10}
-                                    flexWrap="wrap"
-                                    justify={"flex-start"}
-                                >
-                                    {muscles.map((muscle, index) => (
-                                        <MuscleItem
-                                            key={index}
-                                            name={muscle.name}
-                                            main={muscle.main}
-                                        />
-                                    ))}
-                                </XStack>
-                            </YStack>
+                            <MuscleInfo muscles={muscles} />
                         </YStack>
                         <XStack gap={10} p={10}></XStack>
                     </YStack>
                 </ScrollView>
+                <XStack justify="center" p={20}>
+                    <Button
+                        bg={"$accent4"}
+                        borderWidth={1}
+                        borderColor="$accent8"
+                        borderRadius={25}
+                        paddingHorizontal={20}
+                        onClick={() => console.log("Save Exercise")}
+                    >
+                        <XStack gap={10} items={"center"}>
+                            <Ionicons name="add" size={16} color="$accent12" />
+                            <Text color="$accent12">Save Exercise</Text>
+                        </XStack>
+                    </Button>
+                </XStack>
             </YStack>
         </YStack>
     );
