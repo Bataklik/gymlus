@@ -1,7 +1,7 @@
 import CardScan from "@/components/home/card-scan";
 import CardStats from "@/components/home/card-stats";
 import RecentlyScanned from "@/components/home/recently-scanned";
-import HomeHeader from "@/components/home/home-header";
+import Header from "@/components/layout/header";
 import React, { useState } from "react";
 import { YStack } from "tamagui";
 
@@ -10,15 +10,13 @@ export default function Home() {
     const [scans, setScans] = useState(21);
     const [saved, setSaved] = useState(67);
     return (
-        <YStack
-            flex={1}
-            backgroundColor="$accent12"
-            gap={20}
-            paddingBlockStart={20}
-        >
+        <YStack flex={1} bg="$accent12" gap={20} paddingBlockStart={20}>
             {/* Header */}
-            <HomeHeader />
-            <YStack gap={15} paddingHorizontal={8}>
+            <Header
+                title="Home"
+                onSettingsPress={() => console.log("Settings pressed")}
+            />
+            <YStack gap={15} paddingInline={8}>
                 {/* Card scan */}
                 <CardScan />
                 {/* Card stats*/}

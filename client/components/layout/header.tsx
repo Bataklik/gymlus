@@ -3,7 +3,12 @@ import React from "react";
 import { XStack, Text, YStack } from "tamagui";
 import { Pressable, StyleSheet } from "react-native";
 
-export default function HomeHeader() {
+interface HomeHeaderProps {
+    title: string;
+    onSettingsPress?: () => void;
+}
+
+export default function Header({ title, onSettingsPress }: HomeHeaderProps) {
     // Source - https://stackoverflow.com/a/24998705
     // Posted by Joeytje50
     // Retrieved 2026-05-12, License - CC BY-SA 3.0
@@ -45,13 +50,15 @@ export default function HomeHeader() {
             paddingBlockStart={40}
             justify={"space-between"}
         >
-            <YStack>
+            <YStack gap={5}>
                 <Text style={stylesheet.headerDate}>
                     {dayName} - {dayMonth} {dayDate}
                 </Text>
-                <Text style={stylesheet.headerTitle}>Gymlus</Text>
+                <XStack items={"center"} width={"100%"}>
+                    <Text style={stylesheet.headerTitle}>{title}</Text>
+                </XStack>
             </YStack>
-            <SettingsButton onPress={() => console.log("Settings pressed")} />
+            <SettingsButton onPress={onSettingsPress} />
         </XStack>
     );
 }
@@ -85,12 +92,13 @@ const stylesheet = StyleSheet.create({
         color: "white",
         fontWeight: "bold",
         fontSize: 28,
-        paddingHorizontal: 20,
+        paddingLeft: 20,
     },
+
     headerDate: {
         color: "lightgray",
         fontSize: 16,
-        paddingHorizontal: 20,
+        paddingLeft: 20,
     },
     headerContainer: {
         alignItems: "center",
