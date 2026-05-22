@@ -1,5 +1,6 @@
 """ FastAPI server for Gymlus. """
-from fastapi import FastAPI
+from fastapi import FastAPI, responses
+import re
 
 app = FastAPI()
 
@@ -68,13 +69,22 @@ history_data = [
 ]
 
 
-@app.get("/api/scan")
-def scan():
+@app.post("/api/scan")
+def post_scan():
     """ Scanning for exercises. """
     return {"message": "hello, world"}
 
 
-@app.get("/api/history")
+@app.get("/api/history", response_class=responses.JSONResponse)
 def get_history():
     """ Get exercise history. """
     return {"history": history_data}
+
+
+@app.get("/api/history/search", response_class=responses.JSONResponse)
+def search_history(query: str):
+    """ Search exercise history. """
+    filtered_history = [
+        item for item in history_data if re.search("^"+query, item["exerciseName"], re.IGNORECASE)
+    ]
+    return {"history": filtered_history}
