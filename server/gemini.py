@@ -32,7 +32,7 @@ Geef GEEN extra tekst, introductie of markdown-blokken terug. Alleen pure JSON.
 """
 
 response = client.models.generate_content(
-    model='gemini-3.5-flash',
+    model='gemini-3.1-flash-lite',
     contents=[get_image(os.path.join(BASE_DIR, "assets", "bench_press_a.jpeg")),
               "Welk apparaat is dit?"],
     config=types.GenerateContentConfig(
