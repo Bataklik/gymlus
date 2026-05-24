@@ -1,9 +1,14 @@
 """ FastAPI server for Gymlus. """
-from fastapi import FastAPI, responses
-import re
-from schemas import PostExercise
+import json
 
+from fastapi import FastAPI, UploadFile, responses
+import re
+
+from fastapi.concurrency import run_in_threadpool
+from schemas import PostExercise, PostExerciseResponse
+from services.gemini_service import GeminiService
 app = FastAPI()
+gemini_service = GeminiService()
 
 
 history_data = [
@@ -70,11 +75,18 @@ history_data = [
 ]
 
 
-@app.post("/api/scan")
-def post_scan(exercise: PostExercise):
+@app.post("/api/scan",
+          response_model=PostExerciseResponse)
+async def post_scan(file: UploadFile):
     """ Scanning for exercises. """
-    exercise_info = get_exercise_info(exercise.exercise_image)
-    return {"message": "hello, world"}
+    contents = await file.read()
+    try:
+        image_file = await run_in_threadpool(lambda: gemini_service.process_profile_image(contents))
+        exercise_info = gemini_service.get_exercise_info(image_file)
+        return {**exercise_info}
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        raise e
 
 
 @app.get("/api/history", response_class=responses.JSONResponse)
