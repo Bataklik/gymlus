@@ -1,6 +1,7 @@
 """ FastAPI server for Gymlus. """
 from fastapi import FastAPI, responses
 import re
+from schemas import PostExercise
 
 app = FastAPI()
 
@@ -70,8 +71,9 @@ history_data = [
 
 
 @app.post("/api/scan")
-def post_scan():
+def post_scan(exercise: PostExercise):
     """ Scanning for exercises. """
+    exercise_info = get_exercise_info(exercise.exercise_image)
     return {"message": "hello, world"}
 
 
