@@ -19,7 +19,7 @@ class PostExerciseResponse(BaseModel):
 
     model_config = ConfigDict(
         extra="forbid",
-        schema_extra={
+        json_schema_extra={
             "example": {
                 "equipment_tag": "lat_pulldown",
                 "display_name": "Cable Lat Pulldown",
