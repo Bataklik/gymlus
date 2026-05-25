@@ -1,6 +1,5 @@
 """ Gemini-3-FLASH content generation example. """
 import io
-import uuid
 from io import BytesIO
 from pathlib import Path
 from dotenv import load_dotenv
