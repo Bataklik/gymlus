@@ -81,7 +81,8 @@ async def post_scan(file: UploadFile):
     """ Scanning for exercises. """
     contents = await file.read()
     try:
-        image_file = await run_in_threadpool(lambda: gemini_service.process_profile_image(contents))
+        image_file = await run_in_threadpool(lambda:
+                                             gemini_service.process_exercise_image(contents))
         exercise_info = gemini_service.get_exercise_info(image_file)
         return {**exercise_info}
     except Exception as e:
