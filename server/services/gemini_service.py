@@ -12,7 +12,7 @@ import os
 import json
 import io
 
-SCAN_PIC_DIR = Path("media/profile_pics")
+SCAN_PIC_DIR = Path("media/exercise_pics")
 
 
 class GeminiService:
@@ -21,14 +21,17 @@ class GeminiService:
     def __init__(self):
         load_dotenv()
         self.client = genai.Client(api_key=os.getenv("GEMINI_KEY"))
-        self.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
 
     def get_image(self, image_path):
         """ Load an image from a file path. """
         return Image.open(io.BytesIO(image_path))
 
-    def process_profile_image(self, content: bytes) -> str:
+    def process_exercise_image(self, content: bytes) -> str:
+        """ Process the uploaded exercise imag and returns the filename. """
         # https://github.com/CoreyMSchafer/FastAPI-12-File-Uploads/blob/2e29f868ad12cf046c7fa7c526cbf3cf8ca40532/image_utils.py#L10
+        # https://stackoverflow.com/questions/8577137/how-can-i-create-a-tmp-file-in-python
+        # ? Opslaan als bestand verwijderd.
         with Image.open(BytesIO(content)) as original:
             img = ImageOps.exif_transpose(original)
 
@@ -38,18 +41,11 @@ class GeminiService:
             if img.mode in ("RGBA", "LA", "P"):
                 img = img.convert("RGB")
 
-            filename = f"{uuid.uuid4().hex}.jpg"
-            filepath = SCAN_PIC_DIR / filename
-
-            SCAN_PIC_DIR.mkdir(parents=True, exist_ok=True)
-
-            img.save(filepath, "JPEG", quality=85, optimize=True)
-
-        return filename
+        return img
 
     def get_exercise_info(self, image_file: Image.Image):
         """ Get exercise information from an image using Gemini. """
-        PROMPT = """
+        prompt = """
         Je bent een AI fitness-expert die gespecialiseerd is in het herkennen van fitnessapparatuur.
         Analyseer de foto en geef ALTIJD een JSON-object terug met de volgende structuur:
 
@@ -69,7 +65,7 @@ class GeminiService:
             contents=[image_file,
                       "Welk apparaat is dit?"],
             config=types.GenerateContentConfig(
-                system_instruction=PROMPT,
+                system_instruction=prompt,
                 temperature=0.0,
                 response_mime_type="application/json"
             )
