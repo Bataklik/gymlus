@@ -56,7 +56,7 @@ The app lets users scan gym machines or exercise cards using their camera. AI th
 
 ### Database
 
-- PostgreSQL
+- SQLite
 
 ## Features
 
