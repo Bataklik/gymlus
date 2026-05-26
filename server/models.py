@@ -1,0 +1,32 @@
+""" Database models for the server. """
+from __future__ import annotations
+
+from datetime import UTC, datetime
+
+from sqlalchemy import DateTime,  ForeignKey, Integer, String, Text
+from sqlalchemy.orm import Mapped, mapped_column
+
+from database import Base
+
+
+class Exercise(Base):
+    """ Schema for an exercise. """
+    __tablename__ = "exercises"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    equipment_tag: Mapped[str] = mapped_column(String, index=True)
+    display_name: Mapped[str] = mapped_column(String, index=True)
+    target_muscles: Mapped[list[str]] = mapped_column(Text, nullable=True)
+    instructions: Mapped[list[str]] = mapped_column(Text, nullable=True)
+
+
+class HistoryItem(Base):
+    """ Schema for a history item. """
+    __tablename__ = "history_items"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    exercise_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("exercises.id"))
+    timestamp: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=datetime.now(UTC))
+    device_id: Mapped[str] = mapped_column(String, index=True)
