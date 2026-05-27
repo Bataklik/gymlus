@@ -25,7 +25,7 @@ export default function RootLayout() {
                     }}
                 />
                 <Stack.Screen
-                    name="exercise"
+                    name="exercise_detail"
                     options={{ animation: "slide_from_right" }}
                 />
             </Stack>

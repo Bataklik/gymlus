@@ -4,7 +4,9 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
 import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
-
+import apiService from "@/services/api-services";
+// https://docs.expo.dev/guides/environment-variables/
+// https://stackoverflow.com/questions/71176314/file-upload-using-fastapi-returns-error-422
 export function useScanCamera() {
     const camera = useRef<ComponentRef<typeof CameraView> | null>(null);
     const [cameraPermission, requestCameraPermission] = useCameraPermissions();
@@ -23,6 +25,7 @@ export function useScanCamera() {
             const photo = await camera.current?.takePictureAsync(options);
             if (!photo) return;
             setImage(photo.uri);
+            await apiService.fetchExercise({ image: photo.uri });
             console.log("Photo taken:", photo.uri);
 
             try {
@@ -41,6 +44,7 @@ export function useScanCamera() {
             }
         }
     };
+
     const closeHandler = () => {
         router.back();
     };
@@ -69,8 +73,21 @@ export function useScanCamera() {
 
         if (!result.canceled) {
             setImage(result.assets[0].uri);
-            console.log("Image: " + image);
-
+            await apiService
+                .fetchExercise({ image: result.assets[0].uri })
+                .then((data) => {
+                    router.push({
+                        pathname: "/exercise_detail",
+                        params: { data: JSON.stringify(data) },
+                    });
+                })
+                .catch((error) => {
+                    Alert.alert(
+                        "Error",
+                        "An error occurred while fetching exercise data. Please try again.",
+                    );
+                    console.error("Error fetching exercise data:", error);
+                });
         }
     };
     const requestMediaLibraryPermission = async () => {
@@ -86,8 +103,6 @@ export function useScanCamera() {
         requestCameraPermission,
         isFlashOn,
         camera,
-        image,
-        setImage,
         takePicture,
         closeHandler,
         flashHandler,

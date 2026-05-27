@@ -3,24 +3,21 @@ import { YStack, XStack, Text, Image } from "tamagui";
 export default function RecentlyScanned() {
     const scannedItems: ScannedItemProps[] = [
         {
-            imageSrc:
-                "https://fastly.picsum.photos/id/275/200/300.jpg?hmac=cSMNzJnIBeocVhMi8311gzgp4ZylFL2LlsUWtqobTEs",
+            imageSrc: require("../../assets/images/exercises/lat_pulldown.png"),
             exerciseName: "Cable Lat Pullddown",
             exerciseCategory: "Back",
             exerciseTime: "2 days ago",
         },
         {
-            imageSrc:
-                "https://fastly.picsum.photos/id/45/200/300.jpg?hmac=mW2p9asL-scUozua98sWn1c03g7CYv7w7IIHwnFp4cM",
-            exerciseName: "Seated Leg Press",
-            exerciseCategory: "Legs",
+            imageSrc: require("../../assets/images/exercises/bench_press.png"),
+            exerciseName: "Bench Press",
+            exerciseCategory: "Chest",
             exerciseTime: "4 days ago",
         },
         {
-            imageSrc:
-                "https://fastly.picsum.photos/id/12/200/300.jpg?hmac=H975kfBbjoaBk4vHQpqpz-uxYLeRtC67xb6WSe_wPkk",
-            exerciseName: "Chest Press",
-            exerciseCategory: "Chest",
+            imageSrc: require("../../assets/images/exercises/seated_row.png"),
+            exerciseName: "Seated Row",
+            exerciseCategory: "Back",
             exerciseTime: "7 days ago",
         },
     ];

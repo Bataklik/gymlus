@@ -1,5 +1,6 @@
 {
-    "debug.javascript.pickAndAttachOptions": {
-        
-    }
+    "debug.javascript.pickAndAttachOptions": {},
+    "java.compile.nullAnalysis.mode": "disabled",
+    "postman.settings.dotenv-detection-notification-visibility": false,
+    "java.configuration.updateBuildConfiguration": "disabled"
 }
