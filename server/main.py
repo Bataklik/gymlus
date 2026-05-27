@@ -1,11 +1,10 @@
 """ FastAPI server for Gymlus. """
-import json
 
 from fastapi import FastAPI, UploadFile, responses
 import re
 
 from fastapi.concurrency import run_in_threadpool
-from schemas import PostExercise, PostExerciseResponse
+from schemas import PostExerciseResponse
 from services.gemini_service import GeminiService
 app = FastAPI()
 gemini_service = GeminiService()
@@ -79,11 +78,15 @@ history_data = [
           response_model=PostExerciseResponse)
 async def post_scan(file: UploadFile):
     """ Scanning for exercises. """
+    print("Received file:")
+    print(file.filename)
     contents = await file.read()
     try:
         image_file = await run_in_threadpool(lambda:
                                              gemini_service.process_exercise_image(contents))
         exercise_info = gemini_service.get_exercise_info(image_file)
+        print("Exercise info:")
+        print(exercise_info)
         return {**exercise_info}
     except Exception as e:
         print(f"Error occurred: {e}")
