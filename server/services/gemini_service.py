@@ -51,10 +51,20 @@ class GeminiService:
         {
         "equipment_tag": "string (kies exact uit: lat_pulldown, seated_row, bench_press, chest_press, of unknown)",
         "display_name": "string (de nette naam van het apparaat, bijv. 'Cable Lat Pulldown')",
-        "target_muscles": ["string", "string"], (lijst met de Latijnse anatomische namen van de primaire spiergroepen die getraind worden, bijv. 'Latissimus dorsi', 'Pectoralis major', 'Biceps brachii')
-        "instructions": ["string", "string"] (een stappenplan/lijst met korte, duidelijke instructies in het Nederlands hoe je de oefening uitvoert)
+        "target_muscles": [
+            {
+            "name": "string (de Latijnse anatomische naam van de spier, bijv. 'Latissimus dorsi')",
+            "main": "boolean (true als dit de primaire doelgroep is, false als het een secundaire/assisterende spiergroep is)"
+            }
+        ],
+        "instructions": ["string", "string"] (een stappenplan/lijst met korte, duidelijke instructies in het Nederlands hoe je de oefening uitvoert),
+        "difficulty": "number (een score van 1 tot 100 die de technische moeilijkheidsgraad/leercurve van de oefening aangeeft, bijv. 20 voor een simpele chest press machine, 65 voor een bench press met losse barbell)",
+        "suggested_sets_reps": "string (een standaard effectieve fitnessrichtlijn voor hypertrofie/spiergroei, bijv. '3 x 8 - 12')",
+        "suggested_rest_seconds": "number (het aanbevolen aantal seconden rust tussen de sets, bijv. 60, 90 of 120)",
+        "mechanics": "string (kies exact uit: compound of isolation)",
+        "force_type": "string (kies exact uit: push of pull)",
+        "equipment_type": "string (kies exact uit: cable, machine, barbell, dumbbell, of bodyweight)"
         }
-
         Als het apparaat niet herkend wordt, zet 'equipment_tag' op 'unknown', 'display_name' op 'Onbekend apparaat' en laat de lijsten leeg.
         Geef GEEN extra tekst, introductie of markdown-blokken terug. Alleen pure JSON.
         """
