@@ -2,15 +2,13 @@ import { XStack, Text, Progress } from "tamagui";
 import { ExerciseInfo } from "./exercise-info";
 
 interface ExerciseInfoSectionProps {
-    dicculty: number;
-    sets: number;
-    reps: number;
+    difficulty: number;
+    sets_reps: string;
     rest: number;
 }
 export function ExerciseInfoSection({
-    dicculty,
-    sets,
-    reps = 0,
+    difficulty,
+    sets_reps,
     rest,
 }: ExerciseInfoSectionProps) {
     return (
@@ -18,7 +16,7 @@ export function ExerciseInfoSection({
             <ExerciseInfo
                 title="DIFFICULTY"
                 content={
-                    <Progress mt={10} value={dicculty} size="$1">
+                    <Progress mt={10} value={difficulty} size="$1">
                         <Progress.Indicator
                             backgroundColor="$color"
                             transition={[
@@ -37,7 +35,7 @@ export function ExerciseInfoSection({
                 title="SETS * REPS"
                 content={
                     <Text fontSize={18} fontWeight={600}>
-                        {sets} x {reps} - {reps + 4}
+                        {sets_reps}
                     </Text>
                 }
             />
