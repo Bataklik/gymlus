@@ -25,6 +25,7 @@ class Exercise(Base):
     suggested_rest_seconds: Mapped[int] = mapped_column(Integer, nullable=True)
     target_muscles: Mapped[list[dict[str, bool]]
                            ] = mapped_column(Text, nullable=True)
+    mechanics: Mapped[str] = mapped_column(String, nullable=True)
 
 
 class HistoryItem(Base):
