@@ -30,9 +30,9 @@ The app lets users scan gym machines or exercise cards using their camera. AI th
 | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
 | <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_15_12-16-30.png" height="500"> | <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_16_21-16-58.png" height="500"> | <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_18_16-59-53.png" height="500"> |
 
-|                                             May 20 - 17:56                                              |                                             May 20 - 21:57                                              | ... |
-| :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-: |
-| <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_20_17-56-37.png" height="500"> | <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_20_17-57-32.png" height="500"> |     |
+|                                             May 20 - 17:56                                              |                                             May 20 - 21:57                                              |                                             May 28 - 18:02                                              |
+| :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_20_17-56-37.png" height="500"> | <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_20_17-57-32.png" height="500"> | <img alt="Scan Screen" src="./client/app-progress/scan/Screenshot_at_May_28_18-02-21.png" height="500"> |
 
 ## History Screen Progress
 
