@@ -102,7 +102,7 @@ export default function ExerciseDetail() {
             paddingBlockStart={20}
         >
             <ScanHeader
-                title="Exercise Detail"
+                title="Oefening Details"
                 icon="barbell"
                 closeHandler={closeHandler}
             />
@@ -130,7 +130,52 @@ export default function ExerciseDetail() {
                             />
                             <MuscleInfo muscles={exercise.target_muscles} />
                         </YStack>
-                        <XStack gap={10} p={10}></XStack>
+                        <YStack gap={10} p={10}>
+                            <XStack>
+                                <Text
+                                    fontSize={18}
+                                    fontWeight="bold"
+                                    color="$color12"
+                                >
+                                    Instructies
+                                </Text>
+                            </XStack>
+                            <YStack gap={5}>
+                                {exercise.instructions.map(
+                                    (instruction, index) => (
+                                        <XStack key={index} gap={10}>
+                                            <XStack
+                                                bg="$accent1"
+                                                opacity={0.6}
+                                                width={30}
+                                                height={30}
+                                                borderTopRightRadius={15}
+                                                borderBottomRightRadius={15}
+                                                borderTopLeftRadius={15}
+                                                borderBottomLeftRadius={15}
+                                                items="center"
+                                                justify="center"
+                                            >
+                                                <Text
+                                                    fontSize={16}
+                                                    fontWeight="600"
+                                                    color="$accent6"
+                                                >
+                                                    {index + 1}
+                                                </Text>
+                                            </XStack>
+                                            <Text
+                                                fontSize={16}
+                                                fontWeight="600"
+                                                color="$color10"
+                                            >
+                                                {instruction}
+                                            </Text>
+                                        </XStack>
+                                    ),
+                                )}
+                            </YStack>
+                        </YStack>
                     </YStack>
                 </ScrollView>
                 <XStack justify="center" p={20}>
@@ -147,7 +192,7 @@ export default function ExerciseDetail() {
                     >
                         <XStack gap={10} items={"center"}>
                             <Ionicons name="add" size={16} color="$accent12" />
-                            <Text color="$accent12">Save Exercise</Text>
+                            <Text color="$accent12">Sla Oefening Op</Text>
                         </XStack>
                     </Button>
                 </XStack>

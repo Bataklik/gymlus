@@ -14,7 +14,7 @@ export function ExerciseInfoSection({
     return (
         <XStack gap={10} p={10} width="100%" rounded="$4" mb={10}>
             <ExerciseInfo
-                title="DIFFICULTY"
+                title="MOEILIJKHEID"
                 content={
                     <Progress mt={10} value={difficulty} size="$1">
                         <Progress.Indicator
@@ -40,7 +40,7 @@ export function ExerciseInfoSection({
                 }
             />
             <ExerciseInfo
-                title="REST"
+                title="RUST"
                 content={
                     <Text fontSize={18} fontWeight={600}>
                         {rest}s
