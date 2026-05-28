@@ -1,12 +1,25 @@
 """ FastAPI server for Gymlus. """
-
-from fastapi import FastAPI, UploadFile, responses
 import re
-
+import json
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from typing_extensions import Annotated
+from unittest.mock import Base
+from fastapi.staticfiles import StaticFiles
+from fastapi import Depends, FastAPI, UploadFile, responses
 from fastapi.concurrency import run_in_threadpool
 from schemas import PostExerciseResponse
+from models import Exercise, HistoryItem
 from services.gemini_service import GeminiService
+from database import get_db, Base, engine
+# from starlette.exceptions import HTTPException
+
+Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/media", StaticFiles(directory="media"), name="media")
+
 gemini_service = GeminiService()
 
 
@@ -76,17 +89,24 @@ history_data = [
 
 @app.post("/api/scan",
           response_model=PostExerciseResponse)
-async def post_scan(file: UploadFile):
+async def post_scan(file: UploadFile, db: Annotated[Session, Depends(get_db)]):
     """ Scanning for exercises. """
-    print("Received file:")
-    print(file.filename)
     contents = await file.read()
     try:
         image_file = await run_in_threadpool(lambda:
                                              gemini_service.process_exercise_image(contents))
         exercise_info = gemini_service.get_exercise_info(image_file)
-        print("Exercise info:")
-        print(exercise_info)
+        # TODO: History item met device id en tijd
+        db_data = exercise_info.copy()
+
+        db_data["target_muscles"] = json.dumps(db_data["target_muscles"])
+        db_data["instructions"] = json.dumps(db_data["instructions"])
+
+        db_exercise = Exercise(**db_data)
+        db.add(db_exercise)
+        db.commit()
+        db.refresh(db_exercise)
+
         return {**exercise_info}
     except Exception as e:
         print(f"Error occurred: {e}")
@@ -94,9 +114,13 @@ async def post_scan(file: UploadFile):
 
 
 @app.get("/api/history", response_class=responses.JSONResponse)
-def get_history():
+def get_history(db: Annotated[Session, Depends(get_db)]):
     """ Get exercise history. """
-    return {"history": history_data}
+    result = db.execute(
+        select(Exercise)
+    )
+    history = result.scalars().all()
+    return {"history": history}
 
 
 @app.get("/api/history/search", response_class=responses.JSONResponse)

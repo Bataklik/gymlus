@@ -18,6 +18,14 @@ class Exercise(Base):
     display_name: Mapped[str] = mapped_column(String, index=True)
     target_muscles: Mapped[list[str]] = mapped_column(Text, nullable=True)
     instructions: Mapped[list[str]] = mapped_column(Text, nullable=True)
+    difficulty: Mapped[int] = mapped_column(Integer, nullable=True)
+    equipment_type: Mapped[str] = mapped_column(String, nullable=True)
+    force_type: Mapped[str] = mapped_column(String, nullable=True)
+    suggested_sets_reps: Mapped[str] = mapped_column(String, nullable=True)
+    suggested_rest_seconds: Mapped[int] = mapped_column(Integer, nullable=True)
+    target_muscles: Mapped[list[dict[str, bool]]
+                           ] = mapped_column(Text, nullable=True)
+    mechanics: Mapped[str] = mapped_column(String, nullable=True)
 
 
 class HistoryItem(Base):
