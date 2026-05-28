@@ -8,7 +8,7 @@ export function MuscleInfo({ muscles }: MuscleInfoProps) {
     return (
         <YStack>
             <Text fontSize={18} fontWeight={600}>
-                Muscles target
+                Spiergroepen
             </Text>
             <XStack gap={10} mt={10} flexWrap="wrap" justify={"flex-start"}>
                 {muscles.map((muscle, index) => (
