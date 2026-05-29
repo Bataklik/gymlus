@@ -25,14 +25,14 @@ export default function RecentlyScanned() {
         <YStack gap={15} paddingInline={8}>
             <XStack items={"center"} justify={"space-between"}>
                 <Text fontWeight={900} fontSize={20}>
-                    Recently scanned
+                    Onlangs gescand
                 </Text>
                 <Text
                     onClick={() => console.log("See all")}
                     fontSize={16}
                     color={"$accent7"}
                 >
-                    See all
+                    Alles zien
                 </Text>
             </XStack>
             <XStack gap={10} justify={"center"}>

@@ -20,7 +20,7 @@ export default function CardStats({ dayStreak, scans, saved }: CardStatsProps) {
                 iconName={"flame-outline"}
                 iconColor={"orange"}
                 value={dayStreak}
-                label={"Day streak"}
+                label={"Aantal dagen"}
             />
             <StatsItem
                 iconName={"scan"}
@@ -32,7 +32,7 @@ export default function CardStats({ dayStreak, scans, saved }: CardStatsProps) {
                 iconName={"bookmark"}
                 iconColor={"darkturquoise"}
                 value={saved}
-                label={"Saved"}
+                label={"Opgeslagen"}
             />
         </XStack>
     );
