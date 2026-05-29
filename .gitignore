@@ -1,3 +1,11 @@
 .DS_Store
 server/.env
 client/.env
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Lokale SQLite databases
+*.db
