@@ -2,13 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { XStack, Text, YStack } from "tamagui";
 import { Pressable, StyleSheet } from "react-native";
+import { Buttonlus } from "../buttonlus";
 
 interface HomeHeaderProps {
     title: string;
-    onSettingsPress?: () => void;
+    onButtonPress?: () => void;
 }
 
-export default function Header({ title, onSettingsPress }: HomeHeaderProps) {
+export default function Header({ title, onButtonPress }: HomeHeaderProps) {
     // Source - https://stackoverflow.com/a/24998705
     // Posted by Joeytje50
     // Retrieved 2026-05-12, License - CC BY-SA 3.0
@@ -58,15 +59,18 @@ export default function Header({ title, onSettingsPress }: HomeHeaderProps) {
                     <Text style={stylesheet.headerTitle}>{title}</Text>
                 </XStack>
             </YStack>
-            <SettingsButton onPress={onSettingsPress} />
+            <Buttonlus
+                onPress={onButtonPress}
+                icon={<Ionicons name="heart" color={"white"} size={28} />}
+            />
         </XStack>
     );
 }
 
-interface SettingsButtonProps {
+interface FavoriteButtonProps {
     onPress?: () => void;
 }
-function SettingsButton({ onPress }: SettingsButtonProps) {
+function FavoriteButton({ onPress }: FavoriteButtonProps) {
     return (
         <Pressable onPress={onPress}>
             <XStack
@@ -81,7 +85,7 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
                 bg={"$color4"}
                 style={stylesheet.buttonContainer}
             >
-                <Ionicons name="cog-outline" color={"white"} size={28} />
+                <Ionicons name="heart" color={"white"} size={28} />
             </XStack>
         </Pressable>
     );

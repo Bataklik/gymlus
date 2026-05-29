@@ -100,7 +100,7 @@ export default function History() {
         <YStack flex={1} bg="$accent12" gap={"$3"} paddingBlockStart={"$4"}>
             <Header
                 title="History"
-                onSettingsPress={() => console.log("Settings pressed")}
+                onButtonPress={() => console.log("Settings pressed")}
             />
             <YStack flex={1} gap={"$3"} paddingInline={"$3"}>
                 <Input
