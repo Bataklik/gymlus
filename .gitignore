@@ -2,10 +2,10 @@
 server/.env
 client/.env
 # Python bytecode
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+server/__pycache__/
+server/*.pyc
+server/*.pyo
+server/*.pyd
 
 # Lokale SQLite databases
-*.db
+server/*.db
