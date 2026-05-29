@@ -6,6 +6,8 @@ server/__pycache__/
 server/*.pyc
 server/*.pyo
 server/*.pyd
+server/services/__pycache__/
+server/services/*.pyc
 
 # Lokale SQLite databases
 server/*.db
