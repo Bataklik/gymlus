@@ -49,11 +49,10 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
     return (
         <XStack
             position="absolute"
-            bottom={insets.bottom + 12}
-            left="$4"
-            right="$4"
-            h={68}
-            br="$10"
+            b={insets.bottom + 12}
+            l="$4"
+            r="$4"
+            height={68}
             bg="rgba(20,22,26,0.86)"
             borderWidth={1}
             borderTopLeftRadius={15}
@@ -61,7 +60,7 @@ export function TabBar({ state, navigation }: BottomTabBarProps) {
             borderBottomLeftRadius={15}
             borderBottomRightRadius={15}
             borderColor="$color4"
-            ai="center"
+            items="center"
             px="$2"
         >
             <Tab
