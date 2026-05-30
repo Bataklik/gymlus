@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { addFavorite } from "@/features/favorites/favoritesSlice";
 import { FavoriteItem } from "@/types";
+import { ExerciseDescription } from "@/components/exercise/exercise-description";
 
 export default function ExerciseDetail() {
     const { data } = useLocalSearchParams();
