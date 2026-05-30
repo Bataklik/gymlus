@@ -5,56 +5,15 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import { ExerciseInfoSection } from "@/components/exercise/exercise-info-section";
 import { MuscleInfo } from "@/components/exercise/muscle-info";
 import { Ionicons } from "@expo/vector-icons";
-
-interface ExerciseInfoProps {
-    title: string;
-    description: string[];
-}
-function ExerciseDescription({ title, description }: ExerciseInfoProps) {
-    return (
-        <>
-            <Text
-                fontSize={26}
-                width={"60%"}
-                fontWeight="bold"
-                color="$color12"
-            >
-                {title}
-            </Text>
-            <Text
-                fontSize={14}
-                width={"100%"}
-                fontWeight="bold"
-                color="$color10"
-            >
-                {/*https://medium.com/@tajammalmaqbool11/capitalize-the-first-letter-in-javascript-with-one-liner-45b482e3dcf5*/}
-                {description
-                    .map(
-                        (description) =>
-                            description.charAt(0).toUpperCase() +
-                            description.slice(1),
-                    )
-                    .join(" • ")}
-            </Text>
-        </>
-    );
-}
-type exerciseType = {
-    display_name: string;
-    equipment_tag: string;
-    instructions: string[];
-    target_muscles: { name: string; main: boolean }[];
-    difficulty: number;
-    suggested_sets_reps: string;
-    suggested_rest_seconds: number;
-    mechanics: string;
-    force_type: string;
-    equipment_type: string;
-};
+import { useDispatch } from "react-redux";
+import { addFavorite } from "@/features/favorites/favoritesSlice";
+import { FavoriteItem } from "@/types";
 
 export default function ExerciseDetail() {
     const { data } = useLocalSearchParams();
-    const exercise: exerciseType = {
+    const dispatch = useDispatch();
+    const exercise: FavoriteItem = {
+        id: JSON.parse(data as string).id,
         display_name: JSON.parse(data as string).display_name,
         equipment_tag: JSON.parse(data as string).equipment_tag,
         instructions: JSON.parse(data as string).instructions,
@@ -71,6 +30,11 @@ export default function ExerciseDetail() {
         suggested_sets_reps: JSON.parse(data as string).suggested_sets_reps,
         suggested_rest_seconds: JSON.parse(data as string)
             .suggested_rest_seconds,
+    };
+
+    const handleSaveExercise = (exercise: FavoriteItem) => {
+        console.log("Saving exercise:", exercise);
+        dispatch(addFavorite(exercise));
     };
 
     const closeHandler = () => {
@@ -188,7 +152,7 @@ export default function ExerciseDetail() {
                         borderBottomStartRadius="$4"
                         borderBottomEndRadius="$4"
                         marginBlockEnd={"$5"}
-                        onClick={() => console.log("Save Exercise")}
+                        onClick={() => handleSaveExercise(exercise)}
                     >
                         <XStack gap={10} items={"center"}>
                             <Ionicons name="add" size={16} color="$accent12" />
