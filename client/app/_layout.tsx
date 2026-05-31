@@ -7,7 +7,7 @@ import "react-native-reanimated";
 import { TamaguiProvider, ToastProvider, ToastViewport } from "tamagui";
 import { config } from "../tamagui.config";
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { store } from "../store";
 export const unstable_settings = {
     anchor: "(tabs)",
 };
@@ -35,6 +35,10 @@ export default function RootLayout() {
                         />
                         <Stack.Screen
                             name="exercise_detail"
+                            options={{ animation: "slide_from_right" }}
+                        />
+                        <Stack.Screen
+                            name="favorites"
                             options={{ animation: "slide_from_right" }}
                         />
                     </Stack>
