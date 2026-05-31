@@ -1,4 +1,5 @@
-import { YStack, XStack, ScrollView, Text, Button } from "tamagui";
+import { YStack, XStack, ScrollView, Text } from "tamagui";
+import { toast } from "@tamagui/toast/v2";
 import ScanHeader from "@/components/scan/scan-header";
 import { router, useLocalSearchParams } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
@@ -35,8 +36,15 @@ export default function ExerciseDetail() {
     };
 
     const handleSaveExercise = (exercise: FavoriteItem) => {
-        console.log("Saving exercise:", exercise);
+        console.log("Saving exercise:");
         dispatch(addFavorite(exercise));
+        router.back();
+        showToast();
+    };
+    const showToast = () => {
+        toast("Oefening opgeslagen", {
+            description: "De oefening is toegevoegd aan je favorieten.",
+        });
     };
 
     const closeHandler = () => {
