@@ -16,7 +16,6 @@ class Exercise(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     equipment_tag: Mapped[str] = mapped_column(String, index=True)
     display_name: Mapped[str] = mapped_column(String, index=True)
-    target_muscles: Mapped[list[str]] = mapped_column(Text, nullable=True)
     instructions: Mapped[list[str]] = mapped_column(Text, nullable=True)
     difficulty: Mapped[int] = mapped_column(Integer, nullable=True)
     equipment_type: Mapped[str] = mapped_column(String, nullable=True)
