@@ -1,5 +1,6 @@
 import { HistoryItem } from "@/components/history/history-item";
 import Header from "@/components/layout/header";
+import { HistoryItemData } from "@/types";
 import React, { useEffect, useState } from "react";
 import { FlatList as RNFlatList } from "react-native";
 import { Input, styled, YStack } from "tamagui";
@@ -10,59 +11,48 @@ const FlatList = styled(RNFlatList, {
     marginBlockEnd: "$13",
 });
 
-interface HistoryItemData {
-    exerciseImage: string;
-    exerciseName: string;
-    muscleGroup: string;
-    time: string;
-}
 export default function History() {
     let [historyData, setHistoryData] = useState<HistoryItemData[]>([
         {
-            exerciseImage: "https://placehold.co/75.jpg",
+            exerciseImage: require("../../assets/images/exercises/lat_pulldown.png"),
             exerciseName: "Cable Lat Pulldown",
             muscleGroup: "Back",
             time: "8:42 AM",
         },
         {
-            exerciseImage: "https://placehold.co/75.jpg",
+            exerciseImage: require("../../assets/images/exercises/bench_press.png"),
             exerciseName: "Bench Press",
             muscleGroup: "Chest",
             time: "9:15 AM",
         },
         {
-            exerciseImage: "https://placehold.co/75.jpg",
+            exerciseImage: require("../../assets/images/exercises/seated_row.png"),
             exerciseName: "Seated Row",
             muscleGroup: "Back",
             time: "10:42 AM",
         },
         {
-            exerciseImage: "https://placehold.co/75.jpg",
-            exerciseName: "Shoulder Press",
-            muscleGroup: "Shoulders",
+            exerciseImage: require("../../assets/images/exercises/hip_adduction.png"),
+            exerciseName: "Hip Adduction",
+            muscleGroup: "Legs",
             time: "11:30 AM",
         },
         {
-            exerciseImage: "https://placehold.co/75.jpg",
+            exerciseImage: require("../../assets/images/exercises/bicep_curl.png"),
             exerciseName: "Bicep Curl",
             muscleGroup: "Arms",
             time: "12:00 PM",
         },
+
         {
-            exerciseImage: "https://placehold.co/75.jpg",
-            exerciseName: "Tricep Extension",
-            muscleGroup: "Arms",
-            time: "1:15 PM",
-        },
-        {
-            exerciseImage: "https://placehold.co/75.jpg",
+            exerciseImage: require("../../assets/images/exercises/squat.png"),
             exerciseName: "Squat",
             muscleGroup: "Legs",
             time: "2:30 PM",
         },
         {
-            exerciseImage: "https://placehold.co/75.jpg",
-            exerciseName: "Lunges",
+            exerciseImage: require("../../assets/images/exercises/hip_abduction.png"),
+            exerciseName: "Hip Abduction",
             muscleGroup: "Legs",
             time: "3:45 PM",
         },
