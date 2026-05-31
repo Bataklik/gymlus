@@ -12,6 +12,13 @@ export interface FavoriteItem {
     mechanics: string;
 }
 
+export interface HistoryItemData {
+    exerciseImage: string;
+    exerciseName: string;
+    muscleGroup: string;
+    time: string;
+}
+
 export interface Muscle {
     main: boolean;
     name: string;

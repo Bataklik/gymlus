@@ -67,30 +67,6 @@ export default function Header({ title, onButtonPress }: HomeHeaderProps) {
     );
 }
 
-interface FavoriteButtonProps {
-    onPress?: () => void;
-}
-function FavoriteButton({ onPress }: FavoriteButtonProps) {
-    return (
-        <Pressable onPress={onPress}>
-            <XStack
-                borderTopLeftRadius={100}
-                borderTopRightRadius={100}
-                borderBottomLeftRadius={100}
-                borderBottomRightRadius={100}
-                borderWidth={1}
-                borderColor="$color5"
-                paddingBlock={5}
-                paddingInline={5}
-                bg={"$color4"}
-                style={stylesheet.buttonContainer}
-            >
-                <Ionicons name="heart" color={"white"} size={28} />
-            </XStack>
-        </Pressable>
-    );
-}
-
 const stylesheet = StyleSheet.create({
     headerTitle: {
         color: "white",
