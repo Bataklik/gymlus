@@ -3,13 +3,13 @@ import React from "react";
 import { Pressable, StyleProp, ViewStyle } from "react-native";
 import { XStack } from "tamagui";
 
-interface ButtonlusProps {
+interface RoundButtonlusProps {
     onPress?: () => void;
     style?: StyleProp<ViewStyle>;
     icon?: React.ReactNode;
 }
 
-export function Buttonlus({ onPress, style, icon }: ButtonlusProps) {
+export function RoundButtonlus({ onPress, style, icon }: RoundButtonlusProps) {
     return (
         <Pressable onPress={onPress}>
             <XStack

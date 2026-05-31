@@ -1,4 +1,5 @@
-import { YStack, XStack, ScrollView, Text, Button } from "tamagui";
+import { YStack, XStack, ScrollView, Text } from "tamagui";
+import { toast } from "@tamagui/toast/v2";
 import ScanHeader from "@/components/scan/scan-header";
 import { router, useLocalSearchParams } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
@@ -7,8 +8,9 @@ import { MuscleInfo } from "@/components/exercise/muscle-info";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { addFavorite } from "@/features/favorites/favoritesSlice";
-import { FavoriteItem } from "@/types";
+import { FavoriteItem, Muscle } from "@/types";
 import { ExerciseDescription } from "@/components/exercise/exercise-description";
+import { RectButtonlus } from "@/components/rect-buttonlus";
 
 export default function ExerciseDetail() {
     const { data } = useLocalSearchParams();
@@ -22,7 +24,7 @@ export default function ExerciseDetail() {
         force_type: JSON.parse(data as string).force_type,
         equipment_type: JSON.parse(data as string).equipment_type,
         target_muscles: JSON.parse(data as string).target_muscles.map(
-            (muscle: any) => ({
+            (muscle: Muscle) => ({
                 name: muscle.name,
                 main: muscle.main,
             }),
@@ -34,8 +36,15 @@ export default function ExerciseDetail() {
     };
 
     const handleSaveExercise = (exercise: FavoriteItem) => {
-        console.log("Saving exercise:", exercise);
+        console.log("Saving exercise:");
         dispatch(addFavorite(exercise));
+        router.back();
+        showToast();
+    };
+    const showToast = () => {
+        toast("Oefening opgeslagen", {
+            description: "De oefening is toegevoegd aan je favorieten.",
+        });
     };
 
     const closeHandler = () => {
@@ -144,22 +153,17 @@ export default function ExerciseDetail() {
                     </YStack>
                 </ScrollView>
                 <XStack justify="center" p={20}>
-                    <Button
-                        bg={"$accent4"}
-                        borderWidth={1}
-                        borderColor="$accent8"
-                        borderTopEndRadius="$4"
-                        borderTopStartRadius="$4"
-                        borderBottomStartRadius="$4"
-                        borderBottomEndRadius="$4"
-                        marginBlockEnd={"$5"}
-                        onClick={() => handleSaveExercise(exercise)}
-                    >
-                        <XStack gap={10} items={"center"}>
-                            <Ionicons name="add" size={16} color="$accent12" />
-                            <Text color="$accent12">Sla Oefening Op</Text>
-                        </XStack>
-                    </Button>
+                    <RectButtonlus
+                        onPress={() => handleSaveExercise(exercise)}
+                        icon={
+                            <Ionicons
+                                name="heart-outline"
+                                size={16}
+                                color="$accent12"
+                            />
+                        }
+                        title="Sla oefening op"
+                    />
                 </XStack>
             </YStack>
         </YStack>

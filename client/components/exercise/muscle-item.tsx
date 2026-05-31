@@ -1,11 +1,8 @@
+import { Muscle } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { XStack, Text } from "tamagui";
 
-interface MuscleItemProps {
-    main: boolean;
-    name: string;
-}
-export function MuscleItem({ name, main }: MuscleItemProps) {
+export function MuscleItem({ name, main }: Muscle) {
     return (
         <XStack
             bg={main ? "$accent3" : "$color7"}
