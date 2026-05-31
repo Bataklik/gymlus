@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { XStack, Text, YStack } from "tamagui";
 import { Pressable, StyleSheet } from "react-native";
-import { Buttonlus } from "../buttonlus";
+import { RoundButtonlus } from "../round-buttonlus";
 
 interface HomeHeaderProps {
     title: string;
@@ -59,7 +59,7 @@ export default function Header({ title, onButtonPress }: HomeHeaderProps) {
                     <Text style={stylesheet.headerTitle}>{title}</Text>
                 </XStack>
             </YStack>
-            <Buttonlus
+            <RoundButtonlus
                 onPress={onButtonPress}
                 icon={<Ionicons name="heart" color={"white"} size={28} />}
             />
