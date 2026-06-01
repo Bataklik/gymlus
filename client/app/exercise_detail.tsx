@@ -19,6 +19,7 @@ export default function ExerciseDetail() {
         id: JSON.parse(data as string).id,
         display_name: JSON.parse(data as string).display_name,
         equipment_tag: JSON.parse(data as string).equipment_tag,
+        image_source: JSON.parse(data as string).image_source,
         instructions: JSON.parse(data as string).instructions,
         mechanics: JSON.parse(data as string).mechanics,
         force_type: JSON.parse(data as string).force_type,

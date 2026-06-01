@@ -15,6 +15,7 @@ export default function Home() {
             <Header
                 title="Home"
                 onButtonPress={() => router.push("/favorites")}
+                iconName="heart"
             />
             <YStack gap={15} paddingInline={8}>
                 {/* Card scan */}

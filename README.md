@@ -40,6 +40,12 @@ The app lets users scan gym machines or exercise cards using their camera. AI th
 | :------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | <img alt="History Screen" src="./client/app-progress/history/Screenshot_at_May_21_12-48-49.png" height="500"/> | <img src="./client/app-progress/history/Screenshot_at_May_22_16-15-05.png" height="500"/> | <img alt="History Screen" src="./client/app-progress/history/Screenshot_at_May_31_15-09-05.png" height="500"/> |
 
+## Favorites Screen Progress
+
+|                                                   May 31 - 15:34                                                   |                                       June 1 - 11:48                                        |                                                   June 1 - 17:32                                                   |
+| :----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img alt="Favorites Screen" src="./client/app-progress/favorites/Screenshot_at_May_31_15-34-14.png" height="500"/> | <img src="./client/app-progress/favorites/Screenshot_at_Jun_01_11-48-00.png" height="500"/> | <img alt="Favorites Screen" src="./client/app-progress/favorites/Screenshot_at_Jun 01_17-32-46.png" height="500"/> |
+
 ## Tech Stack
 
 ### Frontend
