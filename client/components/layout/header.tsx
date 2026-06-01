@@ -1,15 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { XStack, Text, YStack } from "tamagui";
-import { Pressable, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { RoundButtonlus } from "../round-buttonlus";
 
 interface HomeHeaderProps {
     title: string;
     onButtonPress?: () => void;
+    iconName: React.ComponentProps<typeof Ionicons>["name"];
 }
 
-export default function Header({ title, onButtonPress }: HomeHeaderProps) {
+export default function Header({
+    title,
+    onButtonPress,
+    iconName,
+}: HomeHeaderProps) {
     // Source - https://stackoverflow.com/a/24998705
     // Posted by Joeytje50
     // Retrieved 2026-05-12, License - CC BY-SA 3.0
@@ -59,10 +64,14 @@ export default function Header({ title, onButtonPress }: HomeHeaderProps) {
                     <Text style={stylesheet.headerTitle}>{title}</Text>
                 </XStack>
             </YStack>
-            <RoundButtonlus
-                onPress={onButtonPress}
-                icon={<Ionicons name="heart" color={"white"} size={28} />}
-            />
+            {iconName && (
+                <RoundButtonlus
+                    onPress={onButtonPress}
+                    icon={
+                        <Ionicons name={iconName} color={"white"} size={28} />
+                    }
+                />
+            )}
         </XStack>
     );
 }
@@ -73,6 +82,7 @@ const stylesheet = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 28,
         paddingLeft: 20,
+        paddingTop: 5,
     },
 
     headerDate: {
