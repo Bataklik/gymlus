@@ -20,6 +20,8 @@ class PostExerciseResponse(BaseModel):
     """
     equipment_tag: str = Field(
         ..., description="Exacte tag van het apparaat (bv: lat_pulldown, seated_row, bench_press, chest_press, of unknown)")
+    image_source: str = Field(...,
+                              description="Bestandsnaam van de bijbehorende afbeelding (bv: 'bench_press.png', 'lat_pulldown.png'. Gebruik 'bench_press.png' als fallback voor 'unknown')")
     display_name: str = Field(..., description="Nette naam van het apparaat")
     target_muscles: list[TargetMuscle] = Field(...,
                                                description="Lijst van target spiergroepen")

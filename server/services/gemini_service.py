@@ -66,6 +66,7 @@ class GeminiService:
         Gever ALTIJD een valide JSON-object terug met exact deze structuur:
         {
         "equipment_tag": "string (kies strict uit de hoofd-tags hierboven óf 'unknown')",
+        "image_source": "string (neem de gekozen 'equipment_tag' en plak er '.png' achter, bijv: 'bench_press.png' of 'bicep_curl.png'. Als de tag 'unknown' is, gebruik dan altijd 'bench_press.png' als fallback)",
         "display_name": "string (de nette, specifieke universele naam van het apparaat of de oefening in het Engels, ZONDER merknaam of modelnummer. Wees zo specifiek mogelijk over de variant, bijv: 'Diverging Seated Row', 'Adjustable Fitness Bench', of 'Hip Adductor Machine'. Als het geen fitness-gerelateerd object is, gebruik dan 'Onbekend apparaat')",
         "target_muscles": [
             {
@@ -96,6 +97,7 @@ class GeminiService:
         Als je een specifieke variant ziet, map je deze zo (let op hoe de tag algemeen is, maar display_name specifiek):
         {
           "equipment_tag": "seated_row",
+          "image_source": "diverging_seated_row.png",
           "display_name": "Diverging Seated Row",
           "target_muscles": [
             {"name": "Latissimus dorsi", "main": true},
@@ -124,4 +126,8 @@ class GeminiService:
             )
         )
 
-        return json.loads(response.text)
+        data = json.loads(response.text)
+        #! Tweede parameter is fallback
+        image_filename = data.get("image_source", "bench_press.png")
+        data["image_source"] = "../../assets/exercises/" + image_filename
+        return data

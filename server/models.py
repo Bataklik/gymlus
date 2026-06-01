@@ -15,6 +15,7 @@ class Exercise(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     equipment_tag: Mapped[str] = mapped_column(String, index=True)
+    image_source: Mapped[str] = mapped_column(String, nullable=True)
     display_name: Mapped[str] = mapped_column(String, index=True)
     instructions: Mapped[list[str]] = mapped_column(Text, nullable=True)
     difficulty: Mapped[int] = mapped_column(Integer, nullable=True)
