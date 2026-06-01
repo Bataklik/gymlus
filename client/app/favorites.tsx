@@ -1,11 +1,13 @@
 import Header from "@/components/layout/header";
 import { RootState } from "@/store";
 import { FavoriteItem } from "@/types";
-import Ionicons from "@expo/vector-icons/build/Ionicons";
 import React, { useEffect, useState } from "react";
 import { FlatList as RNFlatList } from "react-native";
-import { useSelector } from "react-redux";
-import { Image, XStack, YStack, Text, styled } from "tamagui";
+import { useDispatch, useSelector } from "react-redux";
+import { YStack, styled } from "tamagui";
+import { router } from "expo-router";
+import { FavItem } from "@/components/favorite/fav-item";
+import { removeFavorite } from "@/features/favorites/favoritesSlice";
 
 const FlatList = styled(RNFlatList, {
     name: "TamaguiFlatList",
@@ -16,17 +18,27 @@ const FlatList = styled(RNFlatList, {
 export default function Favorites() {
     const [favoritesList, setFavoritesList] = useState<FavoriteItem[]>([]);
     const favorites = useSelector((state: RootState) => state.favorites.items);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setFavoritesList(favorites);
     }, []);
 
+    const handleRemoveFavorite = (item: FavoriteItem) => {
+        dispatch(removeFavorite(item.id));
+        setFavoritesList((prevList) =>
+            prevList.filter((fav) => fav.id !== item.id),
+        );
+    };
+
     return (
         <YStack flex={1} bg="$accent12" gap={"$3"} paddingBlockStart={"$4"}>
             <Header
                 title="Favorites"
-                onButtonPress={() => console.log("Settings pressed")}
+                onButtonPress={() => router.back()}
+                iconName="close"
             />
+
             <YStack flex={1} gap={"$3"} paddingInline={"$3"}>
                 <FlatList
                     data={favoritesList}
@@ -38,34 +50,15 @@ export default function Favorites() {
                     renderItem={({ item }) => {
                         const favoriteItem = item as (typeof favoritesList)[0];
                         return (
-                            <XStack justify={"space-between"} paddingBlock={10}>
-                                <XStack gap={10}>
-                                    <Image
-                                        src={require("../assets/images/exercises/bench_press.png")}
-                                        style={{
-                                            width: 75,
-                                            height: 75,
-                                            borderRadius: 10,
-                                        }}
-                                    />
-                                    <YStack>
-                                        <Text fontWeight={800} fontSize={18}>
-                                            {favoriteItem.display_name}
-                                        </Text>
-                                        <Text fontSize={14} color={"$color11"}>
-                                            {favoriteItem.difficulty} -{" "}
-                                            {favoriteItem.equipment_type}
-                                        </Text>
-                                    </YStack>
-                                </XStack>
-                                <YStack justify={"center"}>
-                                    <Ionicons
-                                        name="chevron-forward"
-                                        size={18}
-                                        color={"white"}
-                                    />
-                                </YStack>
-                            </XStack>
+                            <FavItem
+                                display_name={favoriteItem.display_name}
+                                difficulty={favoriteItem.difficulty}
+                                equipment_type={favoriteItem.equipment_type}
+                                image_source={favoriteItem.image_source}
+                                onPress={() => {
+                                    handleRemoveFavorite(favoriteItem);
+                                }}
+                            />
                         );
                     }}
                 />
