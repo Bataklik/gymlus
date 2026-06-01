@@ -1,6 +1,7 @@
 export interface FavoriteItem {
     id: string;
     equipment_tag: string;
+    image_source: string;
     display_name: string;
     instructions: string[];
     difficulty: number;
