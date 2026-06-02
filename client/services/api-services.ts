@@ -9,6 +9,8 @@ class ApiService {
             name: "exercise.jpg",
             type: "image/jpeg",
         } as any);
+        // TODO
+        imgData.append("unique_device_id", "1234567890");
 
         console.log("(fetchExercise) Sending image to API...");
         console.log(imgData);
