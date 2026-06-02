@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^2.12.0",
     "@tamagui/config": "^2.0.0-rc.42",
     "@tamagui/progress": "^2.0.0-rc.42",
+    "@tamagui/spinner": "^2.1.0",
     "@tamagui/toast": "^2.1.0",
     "expo": "~54.0.33",
     "expo-camera": "~17.0.10",
