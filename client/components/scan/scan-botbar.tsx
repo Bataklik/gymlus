@@ -44,7 +44,7 @@ const ScanBotButton = ({
     icon,
     onPress,
 }: {
-    icon: string;
+    icon: React.ComponentProps<typeof Ionicons>["name"];
     onPress: () => void;
 }) => {
     return (
