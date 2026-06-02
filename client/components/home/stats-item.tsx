@@ -1,10 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { YStack, XStack, Text } from "tamagui";
+import { OpaqueColorValue } from "react-native/Libraries/StyleSheet/StyleSheet";
+import { YStack, XStack, Text, GetThemeValueForKey } from "tamagui";
 
 interface StatsItemProps {
-    iconName: string;
-    iconColor: string;
+    iconName: React.ComponentProps<typeof Ionicons>["name"];
+    iconColor?: string | OpaqueColorValue | undefined;
+    textColor?: OpaqueColorValue | GetThemeValueForKey<"color"> | undefined;
     value: number | string;
     label: string;
 }
@@ -12,6 +14,7 @@ interface StatsItemProps {
 export default function StatsItem({
     iconName,
     iconColor,
+    textColor,
     value,
     label,
 }: StatsItemProps) {
@@ -27,13 +30,13 @@ export default function StatsItem({
             paddingEnd={10}
             paddingBlockStart={10}
             paddingBlockEnd={10}
-            backgroundColor="$color3"
-            paddingStart={20}
+            bg="$color3"
+            paddingInline={20}
             justify={"center"}
         >
             <XStack justify={"flex-start"} items={"center"} gap={4}>
                 <Ionicons name={iconName} size={20} color={iconColor} />
-                <Text color={iconColor} fontSize={18} fontWeight={700}>
+                <Text color={textColor} fontSize={18} fontWeight={700}>
                     {value}
                 </Text>
             </XStack>

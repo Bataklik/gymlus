@@ -1,18 +1,20 @@
-import { FavoriteItem } from "@/types";
+import { Exercise } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+// https://dev.to/avinash_krishnan/add-to-cart-feature-in-react-with-redux-toolkit-24f7
 export const favoritesSlice = createSlice({
     name: "favorites",
     initialState: {
-        items: [] as FavoriteItem[],
+        items: [] as Exercise[],
     },
     reducers: {
-        addFavorite: (state, action: PayloadAction<FavoriteItem>) => {
-            state.items.push(action.payload);
+        addFavorite: (state, action: PayloadAction<Exercise>) => {
+            const newFavorite = action.payload;
+            state.items.push(newFavorite);
         },
         removeFavorite: (state, action: PayloadAction<string>) => {
+            const toRemoveFavoriteId = action.payload;
             state.items = state.items.filter(
-                (item) => item.id !== action.payload,
+                (item) => item.id !== toRemoveFavoriteId,
             );
         },
     },

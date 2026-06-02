@@ -1,5 +1,7 @@
 """ FastAPI server for Gymlus. """
 import re
+import time
+import uuid
 import json
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -12,6 +14,7 @@ from schemas import PostExerciseResponse
 from models import Exercise, HistoryItem
 from services.gemini_service import GeminiService
 from database import get_db, Base, engine
+from fastapi import Form
 # from starlette.exceptions import HTTPException
 
 Base.metadata.create_all(bind=engine)
@@ -89,23 +92,32 @@ history_data = [
 
 @app.post("/api/scan",
           response_model=PostExerciseResponse)
-async def post_scan(file: UploadFile, db: Annotated[Session, Depends(get_db)]):
+async def post_scan(file: UploadFile,
+                    unique_device_id: str = Form(
+                        ..., description="Unieke ID van het apparaat dat de scan uitvoert"),
+                    db: Annotated[Session, Depends(get_db)] = None):
     """ Scanning for exercises. """
     contents = await file.read()
     try:
         image_file = await run_in_threadpool(lambda:
                                              gemini_service.process_exercise_image(contents))
         exercise_info = gemini_service.get_exercise_info(image_file)
-        # TODO: History item met device id en tijd
+        # TODO: History item met tijd
         db_data = exercise_info.copy()
 
         db_data["target_muscles"] = json.dumps(db_data["target_muscles"])
         db_data["instructions"] = json.dumps(db_data["instructions"])
-
         db_exercise = Exercise(**db_data)
         db.add(db_exercise)
         db.commit()
         db.refresh(db_exercise)
+
+        db_history = HistoryItem(
+            exercise_id=db_exercise.id,
+            device_id=unique_device_id,
+        )
+        db.add(db_history)
+        db.commit()
 
         return {**exercise_info}
     except Exception as e:

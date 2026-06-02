@@ -19,18 +19,21 @@ export default function CardStats({ dayStreak, scans, saved }: CardStatsProps) {
             <StatsItem
                 iconName={"flame-outline"}
                 iconColor={"orange"}
+                textColor={"orange"}
                 value={dayStreak}
                 label={"Aantal dagen"}
             />
             <StatsItem
                 iconName={"scan"}
                 iconColor={"greenyellow"}
+                textColor={"greenyellow"}
                 value={scans}
                 label={"Scans"}
             />
             <StatsItem
                 iconName={"bookmark"}
                 iconColor={"darkturquoise"}
+                textColor={"darkturquoise"}
                 value={saved}
                 label={"Opgeslagen"}
             />
