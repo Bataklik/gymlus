@@ -1,6 +1,6 @@
 import Header from "@/components/layout/header";
 import { RootState } from "@/store";
-import { FavoriteItem } from "@/types";
+import { Exercise } from "@/types";
 import React, { useEffect, useState } from "react";
 import { FlatList as RNFlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ const FlatList = styled(RNFlatList, {
 });
 
 export default function Favorites() {
-    const [favoritesList, setFavoritesList] = useState<FavoriteItem[]>([]);
+    const [favoritesList, setFavoritesList] = useState<Exercise[]>([]);
     const favorites = useSelector((state: RootState) => state.favorites.items);
     const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ export default function Favorites() {
         setFavoritesList(favorites);
     }, []);
 
-    const handleRemoveFavorite = (item: FavoriteItem) => {
+    const handleRemoveFavorite = (item: Exercise) => {
         dispatch(removeFavorite(item.id));
         setFavoritesList((prevList) =>
             prevList.filter((fav) => fav.id !== item.id),
