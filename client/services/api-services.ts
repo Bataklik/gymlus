@@ -39,6 +39,31 @@ class ApiService {
                 throw error;
             });
     }
+
+    async fetchHistory() {
+        console.log("(fetchHistory)");
+        const uniqueDeviceId = await getUniqueId()
+            .then((id) => id)
+            .catch((error) => `dev-${Date.now()}`);
+
+        return await fetch(
+            process.env.EXPO_PUBLIC_API_URL + `/api/history/${uniqueDeviceId}`,
+        )
+            .then((response) => {
+                console.log("API response status:", response);
+                return response.json();
+            })
+            .then((data) => {
+                console.log("API response data:");
+                console.log(data);
+                return data;
+            })
+            .catch((error) => {
+                console.error("Error calling API:");
+                console.error(error);
+                throw error;
+            });
+    }
 }
 
 const apiService = new ApiService();
