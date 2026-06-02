@@ -1,3 +1,4 @@
+import { getUniqueId } from "react-native-device-info";
 class ApiService {
     async fetchExercise({ image }: { image: string | null }) {
         console.log("(fetchExercise) image changed:", image);
@@ -10,7 +11,11 @@ class ApiService {
             type: "image/jpeg",
         } as any);
         // TODO
-        imgData.append("unique_device_id", "1234567890");
+        const uniqueDeviceId = await getUniqueId()
+            .then((id) => id)
+            .catch((error) => `dev-${Date.now()}`);
+
+        imgData.append("unique_device_id", uniqueDeviceId);
 
         console.log("(fetchExercise) Sending image to API...");
         console.log(imgData);

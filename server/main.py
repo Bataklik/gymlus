@@ -4,7 +4,7 @@ import time
 import uuid
 import json
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing_extensions import Annotated
 from unittest.mock import Base
 from fastapi.staticfiles import StaticFiles
@@ -128,10 +128,9 @@ async def post_scan(file: UploadFile,
 @app.get("/api/history", response_class=responses.JSONResponse)
 def get_history(db: Annotated[Session, Depends(get_db)]):
     """ Get exercise history. """
-    result = db.execute(
-        select(Exercise)
-    )
-    history = result.scalars().all()
+    history = db.scalars(select(HistoryItem)
+                         .options(joinedload(HistoryItem.exercise))
+                         .order_by(HistoryItem.timestamp.desc())).all()
     return {"history": history}
 
 
