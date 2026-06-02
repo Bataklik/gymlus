@@ -1,4 +1,4 @@
-export interface FavoriteItem {
+export interface Exercise {
     id: string;
     equipment_tag: string;
     image_source: string;
@@ -13,8 +13,16 @@ export interface FavoriteItem {
     mechanics: string;
 }
 
+export interface ExerciseSummary {
+    id: string;
+    imageSrc: string;
+    display_name: string;
+    equipment_tag: string;
+    equipment_type: string;
+}
+
 export interface HistoryItemData {
-    exerciseImage: string;
+    image_source: string;
     exerciseName: string;
     muscleGroup: string;
     time: string;

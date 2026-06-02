@@ -1,24 +1,28 @@
+import { ExerciseSummary } from "@/types";
 import { YStack, XStack, Text, Image } from "tamagui";
 
 export default function RecentlyScanned() {
-    const scannedItems: ScannedItemProps[] = [
+    const scannedItems: ExerciseSummary[] = [
         {
+            id: "1",
             imageSrc: require("../../assets/images/exercises/lat_pulldown.png"),
-            exerciseName: "Cable Lat Pullddown",
-            exerciseCategory: "Back",
-            exerciseTime: "2 days ago",
+            display_name: "Cable Lat Pulldown",
+            equipment_tag: "Back",
+            equipment_type: "Cable",
         },
         {
+            id: "2",
             imageSrc: require("../../assets/images/exercises/bench_press.png"),
-            exerciseName: "Bench Press",
-            exerciseCategory: "Chest",
-            exerciseTime: "4 days ago",
+            display_name: "Bench Press",
+            equipment_tag: "Chest",
+            equipment_type: "Barbell",
         },
         {
+            id: "3",
             imageSrc: require("../../assets/images/exercises/seated_row.png"),
-            exerciseName: "Seated Row",
-            exerciseCategory: "Back",
-            exerciseTime: "7 days ago",
+            display_name: "Seated Row",
+            equipment_tag: "Back",
+            equipment_type: "Cable",
         },
     ];
     return (
@@ -37,26 +41,18 @@ export default function RecentlyScanned() {
             </XStack>
             <XStack gap={10} justify={"center"}>
                 {scannedItems.map((item, index) => (
-                    <ScannedItem key={index} {...item} />
+                    <ScannedItem
+                        key={item.id || item.equipment_tag}
+                        {...item}
+                    />
                 ))}
             </XStack>
         </YStack>
     );
 }
 
-interface ScannedItemProps {
-    imageSrc: string;
-    exerciseName: string;
-    exerciseCategory: string;
-    exerciseTime: string;
-}
-
-function ScannedItem({
-    imageSrc,
-    exerciseName,
-    exerciseCategory,
-    exerciseTime,
-}: ScannedItemProps) {
+function ScannedItem(item: ExerciseSummary) {
+    const { imageSrc, display_name, equipment_tag, equipment_type } = item;
     return (
         <YStack gap={5}>
             <Image
@@ -71,9 +67,9 @@ function ScannedItem({
             />
 
             <YStack>
-                <Text>{exerciseName}</Text>
+                <Text>{display_name}</Text>
                 <Text color={"$color9"}>
-                    {exerciseCategory} - {exerciseTime}
+                    {equipment_tag} - {equipment_type}
                 </Text>
             </YStack>
         </YStack>
