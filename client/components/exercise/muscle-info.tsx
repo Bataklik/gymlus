@@ -15,7 +15,7 @@ export function MuscleInfo({ muscles }: MuscleInfoProps) {
             <XStack gap={10} mt={10} flexWrap="wrap" justify={"flex-start"}>
                 {muscleArray.map((muscle, index) => (
                     <MuscleItem
-                        key={index}
+                        key={muscle.name}
                         name={muscle.name}
                         main={muscle.main}
                     />
