@@ -1,15 +1,11 @@
 """ FastAPI server for Gymlus. """
 import re
-import time
-import uuid
 import json
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from typing_extensions import Annotated
 from unittest.mock import Base
 from fastapi.staticfiles import StaticFiles
 from fastapi import Depends, FastAPI, UploadFile, responses
-from fastapi.concurrency import run_in_threadpool
 from schemas import PostExerciseResponse
 from models import Exercise, HistoryItem
 from services.gemini_service import GeminiService
@@ -99,9 +95,9 @@ async def post_scan(file: UploadFile,
     """ Scanning for exercises. """
     contents = await file.read()
     try:
-        image_file = await run_in_threadpool(lambda:
-                                             gemini_service.process_exercise_image(contents))
-        exercise_info = gemini_service.get_exercise_info(image_file)
+        # image_file = await run_in_threadpool(lambda:
+        #                                      gemini_service.process_image(contents))
+        exercise_info = gemini_service.predict_exercise(contents)
         # TODO: History item met tijd
         db_data = exercise_info.copy()
 
@@ -125,13 +121,10 @@ async def post_scan(file: UploadFile,
         raise e
 
 
-@app.get("/api/history", response_class=responses.JSONResponse)
-def get_history(db: Annotated[Session, Depends(get_db)]):
+@app.get("/api/history/{device_id}", response_class=responses.JSONResponse)
+def get_history(device_id: str, db: Annotated[Session, Depends(get_db)]):
     """ Get exercise history. """
-    result = db.execute(
-        select(Exercise)
-    )
-    history = result.scalars().all()
+    history = gemini_service.retrieve_history(db, device_id)
     return {"history": history}
 
 

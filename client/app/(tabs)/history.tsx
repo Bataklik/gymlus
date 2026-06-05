@@ -1,5 +1,6 @@
 import { HistoryItem } from "@/components/history/history-item";
 import Header from "@/components/layout/header";
+import apiService from "@/services/api-services";
 import { HistoryItemData } from "@/types";
 import React, { useEffect, useState } from "react";
 import { FlatList as RNFlatList } from "react-native";
@@ -12,84 +13,28 @@ const FlatList = styled(RNFlatList, {
 });
 
 export default function History() {
-    let [historyData, setHistoryData] = useState<HistoryItemData[]>([
-        {
-            exerciseImage: require("../../assets/images/exercises/lat_pulldown.png"),
-            exerciseName: "Cable Lat Pulldown",
-            muscleGroup: "Back",
-            time: "8:42 AM",
-        },
-        {
-            exerciseImage: require("../../assets/images/exercises/bench_press.png"),
-            exerciseName: "Bench Press",
-            muscleGroup: "Chest",
-            time: "9:15 AM",
-        },
-        {
-            exerciseImage: require("../../assets/images/exercises/seated_row.png"),
-            exerciseName: "Seated Row",
-            muscleGroup: "Back",
-            time: "10:42 AM",
-        },
-        {
-            exerciseImage: require("../../assets/images/exercises/hip_adduction.png"),
-            exerciseName: "Hip Adduction",
-            muscleGroup: "Legs",
-            time: "11:30 AM",
-        },
-        {
-            exerciseImage: require("../../assets/images/exercises/bicep_curl.png"),
-            exerciseName: "Bicep Curl",
-            muscleGroup: "Arms",
-            time: "12:00 PM",
-        },
-
-        {
-            exerciseImage: require("../../assets/images/exercises/squat.png"),
-            exerciseName: "Squat",
-            muscleGroup: "Legs",
-            time: "2:30 PM",
-        },
-        {
-            exerciseImage: require("../../assets/images/exercises/hip_abduction.png"),
-            exerciseName: "Hip Abduction",
-            muscleGroup: "Legs",
-            time: "3:45 PM",
-        },
-        {
-            exerciseImage: "https://placehold.co/75.jpg",
-            exerciseName: "Plank",
-            muscleGroup: "Core",
-            time: "4:00 PM",
-        },
-        {
-            exerciseImage: "https://placehold.co/75.jpg",
-            exerciseName: "Push-ups",
-            muscleGroup: "Chest",
-            time: "5:15 PM",
-        },
-    ]);
-    const [searchTerm, setSearchTerm] = useState<string>("");
-    const [historyList, setHistoryList] = useState(historyData);
-    const searchHandler = (text: string) => {
-        setHistoryList((prevData) =>
-            prevData.filter((item) =>
-                item.exerciseName.toLowerCase().includes(text.toLowerCase()),
-            ),
-        );
-    };
+    // const [searchTerm, setSearchTerm] = useState<string>("");
+    const [historyList, setHistoryList] = useState<HistoryItemData[] | null>(
+        null,
+    );
     useEffect(() => {
-        if (searchTerm === "") {
-            setHistoryList(historyData);
-        } else {
-            searchHandler(searchTerm);
+        async function fetchHistoryData() {
+            try {
+                const response = await apiService.fetchHistory();
+                const data = response;
+                setHistoryList(data.history || []);
+            } catch (error) {
+                console.error("Error fetching history data:", error);
+            }
         }
-    }, [historyData, searchTerm]);
+        fetchHistoryData();
+    }, []);
 
     return (
         <YStack flex={1} bg="$accent12" gap={"$3"} paddingBlockStart={"$4"}>
             <Header
                 title="History"
+                iconName="settings"
                 onButtonPress={() => console.log("Settings pressed")}
             />
             <YStack flex={1} gap={"$3"} paddingInline={"$3"}>
@@ -98,23 +43,29 @@ export default function History() {
                     placeholder={"Search history..."}
                     placeholderTextColor={"$color10"}
                     borderWidth={"$1"}
-                    onChange={(text) => setSearchTerm(text.target.value)}
+                    onChange={(text) => null}
                 />
 
                 <FlatList
                     data={historyList}
                     keyExtractor={(item) => {
-                        const historyItem = item as (typeof historyData)[0];
-                        return `${historyItem.exerciseName}-${historyItem.time}`;
+                        const historyItem: HistoryItemData =
+                            item as HistoryItemData;
+                        return historyItem.id;
                     }}
                     showsVerticalScrollIndicator={true}
                     renderItem={({ item }) => {
-                        const historyItem = item as (typeof historyData)[0];
+                        const historyItem: HistoryItemData =
+                            item as HistoryItemData;
                         return (
                             <HistoryItem
-                                exerciseImage={historyItem.exerciseImage}
-                                exerciseName={historyItem.exerciseName}
-                                muscleGroup={historyItem.muscleGroup}
+                                exerciseImage={
+                                    historyItem.exercise.image_source
+                                }
+                                exerciseName={historyItem.exercise.display_name}
+                                muscleGroup={
+                                    historyItem.exercise.equipment_type
+                                }
                                 time={historyItem.time}
                             />
                         );

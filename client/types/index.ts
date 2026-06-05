@@ -15,16 +15,17 @@ export interface Exercise {
 
 export interface ExerciseSummary {
     id: string;
-    imageSrc: string;
+    image_source: string;
     display_name: string;
     equipment_tag: string;
     equipment_type: string;
 }
 
 export interface HistoryItemData {
-    image_source: string;
-    exerciseName: string;
-    muscleGroup: string;
+    id: string;
+    device_id: string;
+    exercise_id: number;
+    exercise: ExerciseSummary;
     time: string;
 }
 

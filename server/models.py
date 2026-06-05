@@ -1,11 +1,10 @@
 """ Database models for the server. """
 from __future__ import annotations
-
 from datetime import UTC, datetime
 import uuid
 
 from sqlalchemy import DateTime,  ForeignKey, Integer, String, Text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import Base
 
@@ -44,3 +43,5 @@ class HistoryItem(Base):
     timestamp: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC))
     device_id: Mapped[str] = mapped_column(String, index=True)
+
+    exercise: Mapped[Exercise] = relationship("Exercise")

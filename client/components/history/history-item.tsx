@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Image, XStack, YStack, Text } from "tamagui";
-
+import { XStack, YStack, Text } from "tamagui";
+import { Image } from "expo-image";
+import { getLocalExerciseImage } from "@/constants/helper";
 interface HistoryItemProps {
     exerciseImage: string;
     exerciseName: string;
@@ -19,7 +20,7 @@ export function HistoryItem({
         <XStack justify={"space-between"} paddingBlock={10}>
             <XStack gap={10}>
                 <Image
-                    src={exerciseImage}
+                    source={getLocalExerciseImage(exerciseImage)}
                     style={{
                         width: 75,
                         height: 75,
