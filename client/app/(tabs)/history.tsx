@@ -2,7 +2,8 @@ import { HistoryItem } from "@/components/history/history-item";
 import Header from "@/components/layout/header";
 import apiService from "@/services/api-services";
 import { HistoryItemData } from "@/types";
-import React, { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList as RNFlatList } from "react-native";
 import { Input, styled, YStack } from "tamagui";
 
@@ -17,18 +18,29 @@ export default function History() {
     const [historyList, setHistoryList] = useState<HistoryItemData[] | null>(
         null,
     );
-    useEffect(() => {
-        async function fetchHistoryData() {
-            try {
-                const response = await apiService.fetchHistory();
-                const data = response;
-                setHistoryList(data.history || []);
-            } catch (error) {
-                console.error("Error fetching history data:", error);
+    // https://reactnavigation.org/docs/use-focus-effect/
+    useFocusEffect(
+        useCallback(() => {
+            async function fetchHistoryData() {
+                try {
+                    const response = await apiService.fetchHistory();
+                    const data = response;
+                    setHistoryList(data.history || []);
+                } catch (error) {
+                    console.error("Error fetching history data:", error);
+                }
             }
-        }
-        fetchHistoryData();
-    }, []);
+            fetchHistoryData();
+            return () => {
+                console.log("Cleanup function called");
+            };
+        }, []),
+    );
+
+    const formatTimestamp = (timestamp: string): string => {
+        const date = new Date(timestamp);
+        return date.toUTCString().slice(5, -7); // Format as "MMM DD YYYY HH:MM:SS"
+    };
 
     return (
         <YStack flex={1} bg="$accent12" gap={"$3"} paddingBlockStart={"$4"}>
@@ -66,7 +78,7 @@ export default function History() {
                                 muscleGroup={
                                     historyItem.exercise.equipment_type
                                 }
-                                time={historyItem.time}
+                                time={formatTimestamp(historyItem.timestamp)}
                             />
                         );
                     }}
