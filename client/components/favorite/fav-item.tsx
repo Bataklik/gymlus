@@ -2,7 +2,7 @@ import Ionicons from "@expo/vector-icons/build/Ionicons";
 import React from "react";
 import { XStack, YStack, Text, Button } from "tamagui";
 import { Image } from "expo-image";
-import { getLocalExerciseImage } from "@/constants/helper";
+import { getLocalExerciseImage } from "@/constants/Helper";
 
 interface FavItemProps {
     display_name: string;

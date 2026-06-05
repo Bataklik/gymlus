@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { XStack, YStack, Text } from "tamagui";
 import { Image } from "expo-image";
-import { getLocalExerciseImage } from "@/constants/helper";
+import { getLocalExerciseImage } from "@/constants/Helper";
 interface HistoryItemProps {
     exerciseImage: string;
     exerciseName: string;
