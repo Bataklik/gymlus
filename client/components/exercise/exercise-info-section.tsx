@@ -16,8 +16,13 @@ export function ExerciseInfoSection({
             <ExerciseInfo
                 title="MOEILIJKHEID"
                 content={
-                    <Progress mt={10} value={difficulty} size="$1">
-                        <Progress.Indicator bg="$color1" />
+                    <Progress
+                        mt={10}
+                        value={difficulty}
+                        theme="light"
+                        size="$1"
+                    >
+                        <Progress.Indicator bg="$accent1" />
                     </Progress>
                 }
             />
