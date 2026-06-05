@@ -49,7 +49,7 @@ export default function Toastlus({
                     altText="Actie"
                     onPress={currentToast.action.onPress}
                 >
-                    <Button size="$2" bg="$accent6" color="$accent12">
+                    <Button size="$2" bg="$accent6">
                         {currentToast.action.title}
                     </Button>
                 </Toast.Action>
