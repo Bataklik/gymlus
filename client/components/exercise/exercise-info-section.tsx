@@ -17,17 +17,7 @@ export function ExerciseInfoSection({
                 title="MOEILIJKHEID"
                 content={
                     <Progress mt={10} value={difficulty} size="$1">
-                        <Progress.Indicator
-                            backgroundColor="$color"
-                            transition={[
-                                "quicker",
-                                {
-                                    transform: {
-                                        overshootClamping: true,
-                                    },
-                                },
-                            ]}
-                        />
+                        <Progress.Indicator bg="$color1" />
                     </Progress>
                 }
             />

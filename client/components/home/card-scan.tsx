@@ -27,7 +27,7 @@ export default function CardScan() {
                 borderBottomLeftRadius={10}
                 borderBottomRightRadius={10}
             >
-                <Text fontWeight={"$40"} color={"$accent8"}>
+                <Text fontWeight={"400"} color={"$accent8"}>
                     AI - SCAN
                 </Text>
             </XStack>
