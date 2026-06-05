@@ -5,21 +5,21 @@ export default function RecentlyScanned() {
     const scannedItems: ExerciseSummary[] = [
         {
             id: "1",
-            imageSrc: require("../../assets/images/exercises/lat_pulldown.png"),
+            image_source: require("../../assets/images/exercises/lat_pulldown.png"),
             display_name: "Cable Lat Pulldown",
             equipment_tag: "Back",
             equipment_type: "Cable",
         },
         {
             id: "2",
-            imageSrc: require("../../assets/images/exercises/bench_press.png"),
+            image_source: require("../../assets/images/exercises/bench_press.png"),
             display_name: "Bench Press",
             equipment_tag: "Chest",
             equipment_type: "Barbell",
         },
         {
             id: "3",
-            imageSrc: require("../../assets/images/exercises/seated_row.png"),
+            image_source: require("../../assets/images/exercises/seated_row.png"),
             display_name: "Seated Row",
             equipment_tag: "Back",
             equipment_type: "Cable",
@@ -52,11 +52,11 @@ export default function RecentlyScanned() {
 }
 
 function ScannedItem(item: ExerciseSummary) {
-    const { imageSrc, display_name, equipment_tag, equipment_type } = item;
+    const { image_source, display_name, equipment_tag, equipment_type } = item;
     return (
         <YStack gap={5}>
             <Image
-                src={imageSrc}
+                src={image_source}
                 width={120}
                 height={180}
                 borderTopLeftRadius={20}
