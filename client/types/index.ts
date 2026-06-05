@@ -26,7 +26,7 @@ export interface HistoryItemData {
     device_id: string;
     exercise_id: number;
     exercise: ExerciseSummary;
-    time: string;
+    timestamp: string;
 }
 
 export interface Muscle {

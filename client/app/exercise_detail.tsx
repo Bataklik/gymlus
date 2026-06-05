@@ -14,6 +14,7 @@ import { RectButtonlus } from "@/components/rect-buttonlus";
 import { RootState } from "@/store";
 import { useState } from "react";
 import { useExerciseDetail } from "@/hooks/useExeciseDetail";
+import { Image } from "expo-image";
 
 export default function ExerciseDetail() {
     const { parseJson } = useExerciseDetail();
@@ -61,9 +62,7 @@ export default function ExerciseDetail() {
         seated_row: require("../assets/videos/exercises/seated_row.mp4"),
     };
 
-    const videoSource =
-        videoSources[exercise.equipment_tag] ||
-        require("../assets/videos/exercises/lat_pulldown.mp4");
+    const videoSource = videoSources[exercise.equipment_tag];
 
     const player = useVideoPlayer(videoSource, (player) => {
         player.loop = true;
@@ -84,11 +83,18 @@ export default function ExerciseDetail() {
                 closeHandler={closeHandler}
             />
             <YStack flex={1} gap={10}>
-                <VideoView
-                    style={{ width: "100%", height: 400 }}
-                    player={player}
-                    fullscreenOptions={{ enable: true }}
-                />
+                {videoSource ? (
+                    <VideoView
+                        style={{ width: "100%", height: 400 }}
+                        player={player}
+                        fullscreenOptions={{ enable: true }}
+                    />
+                ) : (
+                    <Image
+                        source={require("../assets/images/exercises/default.png")}
+                        style={{ width: "100%", height: 400, borderRadius: 10 }}
+                    />
+                )}
                 <ScrollView flex={1} width="100%" rounded="$4">
                     <YStack gap={10} p={5}>
                         <YStack gap={10} p={10}>

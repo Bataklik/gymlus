@@ -57,7 +57,7 @@ class GeminiService:
             Gever ALTIJD een valide JSON-object terug met exact deze structuur:
             {
             "equipment_tag": "string (kies strict uit de hoofd-tags hierboven óf 'unknown')",
-            "image_source": "string (neem de gekozen 'equipment_tag' en plak er '.png' achter, bijv: 'bench_press.png' of 'bicep_curl.png'. Als de tag 'unknown' is, gebruik dan altijd 'bench_press.png' als fallback)",
+            "image_source": "string (neem de gekozen 'equipment_tag' en plak er '.png' achter, bijv: 'bench_press.png' of 'bicep_curl.png'. Als de tag 'unknown' is, gebruik dan altijd 'default.png' als fallback)",
             "display_name": "string (de nette, specifieke universele naam van het apparaat of de oefening in het Engels, ZONDER merknaam of modelnummer. Wees zo specifiek mogelijk over de variant, bijv: 'Diverging Seated Row', 'Adjustable Fitness Bench', of 'Hip Adductor Machine'. Als het geen fitness-gerelateerd object is, gebruik dan 'Onbekend apparaat')",
             "target_muscles": [
                 {
