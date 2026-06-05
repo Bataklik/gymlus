@@ -1,4 +1,4 @@
-const exerciseContext = require.context(
+const exerciseContext = (require as any).context(
     "../assets/images/exercises",
     false,
     /\.png$/,
