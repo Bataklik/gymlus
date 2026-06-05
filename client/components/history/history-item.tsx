@@ -32,7 +32,9 @@ export function HistoryItem({
                         {exerciseName}
                     </Text>
                     <Text fontSize={14} color={"$color11"}>
-                        {muscleGroup} - {time}
+                        {muscleGroup.charAt(0)?.toUpperCase() +
+                            muscleGroup.slice(1)}
+                        - {time}
                     </Text>
                 </YStack>
             </XStack>
