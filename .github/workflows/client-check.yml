@@ -1,3 +1,4 @@
+#? https://docs.github.com/en/actions/tutorials/create-an-example-workflow
 name: client-check
 on:
     push:
@@ -8,6 +9,13 @@ jobs:
     client-check:
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
             - name: Install Frontend Dependencies
               run: npm install
               working-directory: ./client
