@@ -1,0 +1,14 @@
+name: client-check
+on:
+    push:
+        branches: [main]
+jobs:
+    client-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Frontend Dependencies
+              run: npm install
+              working-directory: ./client
+            - name: Run TypeScript Type Check
+              run: npx tsc --noEmit
+              working-directory: ./client
