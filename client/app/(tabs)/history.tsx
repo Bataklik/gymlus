@@ -4,7 +4,6 @@ import apiService from "@/services/api-services";
 import { HistoryItemData } from "@/types";
 import React, { useEffect, useState } from "react";
 import { FlatList as RNFlatList } from "react-native";
-import { getUniqueId } from "react-native-device-info";
 import { Input, styled, YStack } from "tamagui";
 
 const FlatList = styled(RNFlatList, {
@@ -22,7 +21,6 @@ export default function History() {
         async function fetchHistoryData() {
             try {
                 const response = await apiService.fetchHistory();
-                console.log(response);
                 const data = response;
                 setHistoryList(data.history || []);
             } catch (error) {
@@ -48,25 +46,31 @@ export default function History() {
                     onChange={(text) => null}
                 />
 
-                {/* <FlatList
+                <FlatList
                     data={historyList}
                     keyExtractor={(item) => {
-                        const historyItem = item as (typeof HistoryItem)[0];
-                        return `${historyItem.exerciseName}-${historyItem.time}`;
+                        const historyItem: HistoryItemData =
+                            item as HistoryItemData;
+                        return historyItem.id;
                     }}
                     showsVerticalScrollIndicator={true}
                     renderItem={({ item }) => {
-                        const historyItem = item as (typeof historyList);
+                        const historyItem: HistoryItemData =
+                            item as HistoryItemData;
                         return (
                             <HistoryItem
-                                exerciseImage={historyItem.exerciseImage}
-                                exerciseName={historyItem.exerciseName}
-                                muscleGroup={historyItem.muscleGroup}
+                                exerciseImage={
+                                    historyItem.exercise.image_source
+                                }
+                                exerciseName={historyItem.exercise.display_name}
+                                muscleGroup={
+                                    historyItem.exercise.equipment_type
+                                }
                                 time={historyItem.time}
                             />
                         );
                     }}
-                /> */}
+                />
             </YStack>
         </YStack>
     );
