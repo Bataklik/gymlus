@@ -1,6 +1,8 @@
 name: client-check
 on:
     push:
+        branches: [main, feature/workflow]
+    pull_request:
         branches: [main]
 jobs:
     client-check:
