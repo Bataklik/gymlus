@@ -121,10 +121,17 @@ async def post_scan(file: UploadFile,
         raise e
 
 
+@app.get("/api/history", response_class=responses.JSONResponse)
+def get_all_history(db: Annotated[Session, Depends(get_db)]):
+    """ Get all exercise history. """
+    history = gemini_service.retrieve_history(db)
+    return {"history": history}
+
+
 @app.get("/api/history/{device_id}", response_class=responses.JSONResponse)
 def get_history(device_id: str, db: Annotated[Session, Depends(get_db)]):
     """ Get exercise history. """
-    history = gemini_service.retrieve_history(db, device_id)
+    history = gemini_service.retrieve_history_by_device(db, device_id)
     return {"history": history}
 
 
