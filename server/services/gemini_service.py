@@ -106,7 +106,13 @@ class GeminiService:
             }
             """
 
-    def retrieve_history(self, db: Session, device_id: str):
+    def retrieve_history(self, db: Session):
+        """ Retrieve all exercise history. """
+        return db.scalars(select(HistoryItem)
+                          .options(joinedload(HistoryItem.exercise))
+                          .order_by(HistoryItem.timestamp.desc())).all()
+
+    def retrieve_history_by_device(self, db: Session, device_id: str):
         """ Retrieve exercise history. """
         return db.scalars(select(HistoryItem)
                           .options(joinedload(HistoryItem.exercise))
