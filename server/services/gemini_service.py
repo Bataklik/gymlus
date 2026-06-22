@@ -1,4 +1,7 @@
 """ Gemini-3-FLASH content generation example. """
+import uuid
+import os
+import json
 from io import BytesIO
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload, Session
@@ -6,9 +9,6 @@ from dotenv import load_dotenv
 from PIL import Image, ImageOps
 from google import genai
 from google.genai import types
-from PIL import Image
-import os
-import json
 
 from models import HistoryItem
 
@@ -111,6 +111,13 @@ class GeminiService:
         return db.scalars(select(HistoryItem)
                           .options(joinedload(HistoryItem.exercise))
                           .order_by(HistoryItem.timestamp.desc())).all()
+
+    def retrieve_history_by_id(self, db: Session, history_id: str):
+        """ Retrieve a single history item by ID. """
+        clean_history_id = history_id.strip().lower()
+        return db.scalars(select(HistoryItem)
+                          .options(joinedload(HistoryItem.exercise))
+                          .where(HistoryItem.id == clean_history_id)).first()
 
     def retrieve_history_by_device(self, db: Session, device_id: str):
         """ Retrieve exercise history. """
