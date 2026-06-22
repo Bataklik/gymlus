@@ -3,14 +3,13 @@ import re
 import json
 from sqlalchemy.orm import Session
 from typing_extensions import Annotated
-from unittest.mock import Base
 from fastapi.staticfiles import StaticFiles
 from fastapi import Depends, FastAPI, UploadFile, responses
+from fastapi import Form
 from schemas import PostExerciseResponse
 from models import Exercise, HistoryItem
 from services.gemini_service import GeminiService
 from database import get_db, Base, engine
-from fastapi import Form
 # from starlette.exceptions import HTTPException
 
 Base.metadata.create_all(bind=engine)
@@ -121,11 +120,30 @@ async def post_scan(file: UploadFile,
         raise e
 
 
+@app.get("/api/history", response_class=responses.JSONResponse)
+def get_all_history(db: Annotated[Session, Depends(get_db)]):
+    """ Get all exercise history. """
+    history = gemini_service.retrieve_history(db)
+    return {"history": history}
+
+
 @app.get("/api/history/{device_id}", response_class=responses.JSONResponse)
 def get_history(device_id: str, db: Annotated[Session, Depends(get_db)]):
     """ Get exercise history. """
-    history = gemini_service.retrieve_history(db, device_id)
+    history = gemini_service.retrieve_history_by_device(db, device_id)
     return {"history": history}
+
+
+@app.get("/api/history/item/{history_id}", response_class=responses.JSONResponse)
+def get_history_by_id(history_id: str, db: Annotated[Session, Depends(get_db)]):
+    """ Get single exercise history. """
+    history_item = gemini_service.retrieve_history_by_id(db, history_id)
+    if history_item is None:
+        return responses.JSONResponse(
+            status_code=404,
+            content={"message": "History item not found"}
+        )
+    return {"history": history_item}
 
 
 @app.get("/api/history/search", response_class=responses.JSONResponse)

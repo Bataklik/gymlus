@@ -1,12 +1,14 @@
 import { HistoryItem } from "@/components/history/history-item";
 import Header from "@/components/layout/header";
+import { useHistory } from "@/hooks/useHisotry";
 import apiService from "@/services/api-services";
 import { HistoryItemData } from "@/types";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
-import { FlatList as RNFlatList } from "react-native";
+import React, { useCallback, useState } from "react";
+import { FlatList as RNFlatList, TouchableOpacity } from "react-native";
 import { Input, styled, YStack } from "tamagui";
-
+import { router } from "expo-router";
+import { useExerciseDetail } from "@/hooks/useExeciseDetail";
 const FlatList = styled(RNFlatList, {
     name: "TamaguiFlatList",
     flex: 1,
@@ -15,27 +17,57 @@ const FlatList = styled(RNFlatList, {
 
 export default function History() {
     // const [searchTerm, setSearchTerm] = useState<string>("");
-    const [historyList, setHistoryList] = useState<HistoryItemData[] | null>(
-        null,
-    );
+    const { fetchHistoryData } = useHistory();
+    const { parseJson } = useExerciseDetail();
+
+    const [historyList, setHistoryList] = useState<HistoryItemData[]>([]);
     // https://reactnavigation.org/docs/use-focus-effect/
     useFocusEffect(
         useCallback(() => {
-            async function fetchHistoryData() {
-                try {
-                    const response = await apiService.fetchHistory();
-                    const data = response;
-                    setHistoryList(data.history || []);
-                } catch (error) {
-                    console.error("Error fetching history data:", error);
-                }
-            }
-            fetchHistoryData();
+            const loadHistory = async () => {
+                const data = await fetchHistoryData();
+                setHistoryList(data);
+            };
+            loadHistory();
             return () => {
-                console.log("Cleanup function called");
+                setHistoryList([]);
             };
         }, []),
     );
+
+    const onHistoryItemPress = async (historyItemId: string) => {
+        try {
+            const historyItemDetails = await apiService
+                .fetchHistoryItem(historyItemId)
+                .then((data) => {
+                    const exerciseData = data?.history?.exercise;
+                    if (exerciseData) {
+                        console.log("Exercise data from history item:");
+                        console.log(exerciseData);
+                        const parsedExercise = parseJson(exerciseData);
+                        console.log("Parsed exercise:");
+                        console.log(parsedExercise);
+                        return parsedExercise;
+                    }
+                })
+                .catch((error) => {
+                    console.error(
+                        "Error fetching history item details:",
+                        error,
+                    );
+                    throw error;
+                });
+
+            console.log("historyItemDetails");
+            console.log(historyItemDetails);
+            router.push({
+                pathname: "/exercise_detail",
+                params: { data: JSON.stringify(historyItemDetails) },
+            });
+        } catch (error) {
+            console.error("Error fetching history item details:", error);
+        }
+    };
 
     const formatTimestamp = (timestamp: string): string => {
         const date = new Date(timestamp);
@@ -70,16 +102,26 @@ export default function History() {
                         const historyItem: HistoryItemData =
                             item as HistoryItemData;
                         return (
-                            <HistoryItem
-                                exerciseImage={
-                                    historyItem.exercise.image_source
+                            <TouchableOpacity
+                                onPress={() =>
+                                    onHistoryItemPress(historyItem.id)
                                 }
-                                exerciseName={historyItem.exercise.display_name}
-                                muscleGroup={
-                                    historyItem.exercise.equipment_type
-                                }
-                                time={formatTimestamp(historyItem.timestamp)}
-                            />
+                            >
+                                <HistoryItem
+                                    exerciseImage={
+                                        historyItem.exercise.image_source
+                                    }
+                                    exerciseName={
+                                        historyItem.exercise.display_name
+                                    }
+                                    muscleGroup={
+                                        historyItem.exercise.equipment_type
+                                    }
+                                    time={formatTimestamp(
+                                        historyItem.timestamp,
+                                    )}
+                                />
+                            </TouchableOpacity>
                         );
                     }}
                 />
