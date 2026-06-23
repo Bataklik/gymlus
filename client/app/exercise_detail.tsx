@@ -15,6 +15,7 @@ import { RootState } from "@/store";
 import { useState } from "react";
 import { useExerciseDetail } from "@/hooks/useExeciseDetail";
 import { Image } from "expo-image";
+import { getExerciseImage } from "@/utils/image-helper";
 
 export default function ExerciseDetail() {
     const { parseJson } = useExerciseDetail();
@@ -91,7 +92,7 @@ export default function ExerciseDetail() {
                     />
                 ) : (
                     <Image
-                        source={require("../assets/images/exercises/default.png")}
+                        source={getExerciseImage(exercise.image_source)}
                         style={{ width: "100%", height: 400, borderRadius: 10 }}
                     />
                 )}
