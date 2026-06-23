@@ -19,7 +19,7 @@ class GeminiService:
     def __init__(self):
         load_dotenv()
         self.client = genai.Client(api_key=os.getenv("GEMINI_KEY"))
-        self.image_source = "../../assets/exercises/"
+        self.image_source = "../../assets/images/exercises/"
 
     def __process_image(self, content: bytes) -> Image:
         """ Process the uploaded exercise imag and returns the filename. """
@@ -144,6 +144,6 @@ class GeminiService:
 
         data = json.loads(response.text)
         #! Tweede parameter is fallback
-        image_filename = data.get("image_source", "bench_press.png")
+        image_filename = data.get("image_source", "default.png")
         data["image_source"] = self.image_source + image_filename
         return data
