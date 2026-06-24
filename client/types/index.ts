@@ -19,6 +19,7 @@ export interface ExerciseSummary {
     display_name: string;
     equipment_tag: string;
     equipment_type: string;
+    force_type: string;
 }
 
 export interface HistoryItemData {
