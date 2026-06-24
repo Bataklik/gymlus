@@ -68,7 +68,11 @@ function ScannedItem({
             />
 
             <YStack>
-                <Text fontSize={12}>{display_name}</Text>
+                <Text fontSize={12}>
+                    {display_name.length > 16
+                        ? display_name.substring(0, 16) + "..."
+                        : display_name}
+                </Text>
                 <Text color={"$color9"}>
                     {force_type} • {new Date(timestamp).toLocaleDateString()}
                 </Text>
