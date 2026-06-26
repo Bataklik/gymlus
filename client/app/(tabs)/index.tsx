@@ -7,12 +7,16 @@ import { YStack } from "tamagui";
 import { router, useFocusEffect } from "expo-router";
 import { useHistory } from "@/hooks/useHisotry";
 import { HistoryItemData } from "@/types";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 export default function Home() {
     const { fetchHistoryData } = useHistory();
+    const favorites = useSelector(
+        (state: RootState) => state.favorites.items,
+    ).length;
 
-    const [dayStreak, setDayStreak] = useState(4);
-    const [scans, setScans] = useState(21);
-    const [saved, setSaved] = useState(67);
+    const [dayStreak, setDayStreak] = useState(-4);
+    const [scans, setScans] = useState(-1);
 
     const [recentlyScanned, setRecentlyScanned] = useState<HistoryItemData[]>(
         [],
@@ -22,7 +26,10 @@ export default function Home() {
         useCallback(() => {
             const loadRecentlyScanned = async () => {
                 const data = await fetchHistoryData();
-                setRecentlyScanned(data.filter((item) => item.exercise));
+                setScans(data.length);
+                setRecentlyScanned(
+                    data.filter((item) => item.exercise).slice(0, 3),
+                );
             };
             loadRecentlyScanned();
             return () => {
@@ -42,7 +49,11 @@ export default function Home() {
                 {/* Card scan */}
                 <CardScan />
                 {/* Card stats*/}
-                <CardStats dayStreak={dayStreak} scans={scans} saved={saved} />
+                <CardStats
+                    dayStreak={dayStreak}
+                    scans={scans}
+                    saved={favorites}
+                />
                 {/* Recently scanned */}
                 <RecentlyScanned recentlyScanned={recentlyScanned} />
             </YStack>
