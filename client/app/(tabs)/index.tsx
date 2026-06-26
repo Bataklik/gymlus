@@ -10,9 +10,9 @@ import { HistoryItemData } from "@/types";
 export default function Home() {
     const { fetchHistoryData } = useHistory();
 
-    const [dayStreak, setDayStreak] = useState(4);
-    const [scans, setScans] = useState(21);
-    const [saved, setSaved] = useState(67);
+    const [dayStreak, setDayStreak] = useState(-4);
+    const [scans, setScans] = useState(-1);
+    const [saved, setSaved] = useState(-7);
 
     const [recentlyScanned, setRecentlyScanned] = useState<HistoryItemData[]>(
         [],
@@ -22,6 +22,7 @@ export default function Home() {
         useCallback(() => {
             const loadRecentlyScanned = async () => {
                 const data = await fetchHistoryData();
+                setScans(data.length);
                 setRecentlyScanned(data.filter((item) => item.exercise));
             };
             loadRecentlyScanned();
