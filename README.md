@@ -83,4 +83,4 @@ This project is focused on:
 
 ## Status
 
-Currently in development.
+Currently finished.
