@@ -9,6 +9,7 @@ import { useHistory } from "@/hooks/useHisotry";
 import { HistoryItemData } from "@/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { calculateDayStreak } from "@/utils/streaks";
 export default function Home() {
     const { fetchHistoryData } = useHistory();
     const favorites = useSelector(
@@ -27,6 +28,10 @@ export default function Home() {
             const loadRecentlyScanned = async () => {
                 const data = await fetchHistoryData();
                 setScans(data.length);
+
+                const streak = calculateDayStreak(data);
+                setDayStreak(streak);
+
                 setRecentlyScanned(
                     data.filter((item) => item.exercise).slice(0, 3),
                 );
